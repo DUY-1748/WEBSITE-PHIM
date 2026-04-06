@@ -1,0 +1,19 @@
+# 🎬 CINECHILL - Website Xem Phim Trực Tuyến
+ **Website Xem Phim Trực Tuyến (CineChill)**.
+Giao diện được thiết kế theo phong cách Dark Mode hiện đại mang lại trải nghiệm xem phim tối ưu cho người dùng.
+
+## 🛠 Công nghệ sử dụng
+* **Frontend:** HTML5, CSS3, JavaScript (Vanilla).
+* **Framework CSS:** Bootstrap 5.
+* **Icon:** FontAwesome.
+## 👥 Danh sách thành viên
+Dự án được chia module và thực hiện bởi nhóm gồm 6 thành viên:
+
+| STT | Họ và Tên | MSSV | Vai trò & Nhiệm vụ |
+| :--- | :--- | :--- | :--- |
+| **1** | [Nguyễn Hoàng Duy] | [080206011748] |
+| **2** | [Trần Văn Đức] | [MSSV 2] |
+| **3** | [ Chiến] | [MSSV 3] | 
+| **4** | [Nguyễn Dinh] | [MSSV 4] | 
+| **5** | [Hòa Thịnh] | [MSSV 5] |  
+| **6** | [Phan Hoàng Tấn Dũng] | [MSSV 6] |  
