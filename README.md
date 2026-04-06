@@ -12,5 +12,5 @@ Dự án được chia module và thực hiện bởi nhóm gồm 6 thành viên
 | **2** | [Trần Văn Đức] | [MSSV 2] |
 | **3** | [ Chiến] | [MSSV 3] | 
 | **4** | [Nguyễn Dinh] | [MSSV 4] | 
-| **5** | [Hòa Thịnh] | [MSSV 5] |  
+| **5** | [Nguyễn Lữ Hòa Thịnh] | [052206010556] |  
 | **6** | [Phan Hoàng Tấn Dũng] | [MSSV 6] |  
