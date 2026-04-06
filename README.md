@@ -1,7 +1,4 @@
-# 🎬 CINECHILL - Website Xem Phim Trực Tuyến
- **Website Xem Phim Trực Tuyến (CineChill)**.
-Giao diện được thiết kế theo phong cách Dark Mode hiện đại mang lại trải nghiệm xem phim tối ưu cho người dùng.
-
+# Website Xem Phim Trực Tuyến
 ## 🛠 Công nghệ sử dụng
 * **Frontend:** HTML5, CSS3, JavaScript (Vanilla).
 * **Framework CSS:** Bootstrap 5.
