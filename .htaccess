@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Đặt thư mục gốc là thư mục dự án của bạn
+RewriteBase /WEBSITE_MOVIES/
+
+# Bỏ qua nếu đường dẫn là một file có thật (css, js, ảnh)
+RewriteCond %{REQUEST_FILENAME} !-f
+# Bỏ qua nếu đường dẫn là một thư mục có thật
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Lấy đoạn chữ trên URL chuyển thành biến page
+RewriteRule ^([^/]+)$ index.php?page=$1 [L,QSA]
