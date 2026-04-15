@@ -20,4 +20,8 @@ switch ($page) {
 
 // 4. Nhúng FOOTER
 include 'includes/footer.php';
+
+
+
+
 ?>
