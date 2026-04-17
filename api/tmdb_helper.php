@@ -1,5 +1,3 @@
-// Lấy danh sách phim
-
 <?php
 // Định nghĩa API Key của bạn tại đây
 define('TMDB_API_KEY', '31467640e90c18ee16fab8bf8993dd38');
@@ -15,7 +13,7 @@ function getMovieData($endpoint, $additionalParams = []) {
         'language' => 'vi-VN'
     ];
     
-    // Gộp tham số mặc định với tham số người dùng truyền vào (ví dụ: page=1, query=abc)
+    // Gộp tham số mặc định với tham số người dùng truyền vào 
     $allParams = array_merge($defaultParams, $additionalParams);
     
     // Tạo chuỗi query: ?api_key=xxx&language=vi-VN&...

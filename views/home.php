@@ -1,3 +1,16 @@
+<?php 
+
+
+
+
+
+
+
+
+?>
+
+
+
 <section class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
@@ -67,5 +80,5 @@
                     <p style="font-size: 12px; color: var(--gold);">Phim Bộ • 2024</p>
                 </div>
             </div>
-            </div>
+        </div>
     </section>

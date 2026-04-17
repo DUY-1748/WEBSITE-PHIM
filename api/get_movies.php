@@ -38,5 +38,14 @@ if (isset($tmdbData['results'])) {
 $stmt = $pdo->query("SELECT * FROM movies ORDER BY created_at DESC");
 $allMovies = $stmt->fetchAll();
 
-echo json_encode($allMovies);
+
+
+
+$stmt = $pdo->query("SELECT * FROM movies ORDER BY created_at DESC");
+$movies = $stmt->fetchAll();
+
+header('Content-Type: application/json'); // Đảm bảo header nằm ở đây hoặc đầu file
+echo json_encode($movies);
+exit;
+
 ?>

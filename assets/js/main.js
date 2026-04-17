@@ -1,4 +1,87 @@
 /*js*/
+import { createMovieCard } from './components/movie_card.js';
+// api 
+
+const apiMovie = '/WEBSITE-PHIM/api/get_movies.php';
+let listMovie = [];
+
+  fetch(apiMovie)
+    .then(res => res.json())
+    .then(data => {
+        
+        listMovie = data;
+        console.log("Dữ liệu gốc (data):", data);
+        console.log(listMovie);
+        const newListMovie = listMovie.map(item => {
+            return {
+                title : item.title,
+                date : item.release_date,
+                poster : ` https://image.tmdb.org/t/p/w500/${item.poster_path}`,
+                rating : item.rating,
+                overview : item.overview
+            }
+        })
+        console.log(newListMovie);
+
+
+        const movieGrid = document.querySelector('.movie-grid');
+        movieGrid.appendChild(createMovieCard(newListMovie));
+        
+
+    })
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Header Scroll Effect (Glassmorphism solidifies)
 window.addEventListener('scroll', () => {

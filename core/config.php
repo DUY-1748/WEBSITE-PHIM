@@ -22,4 +22,3 @@ try {
      die("Lỗi kết nối Database: " . $e->getMessage());
 } 
 
-?>
