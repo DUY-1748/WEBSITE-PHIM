@@ -12,22 +12,21 @@ let listMovie = [];
         listMovie = data;
         console.log("Dữ liệu gốc (data):", data);
         console.log(listMovie);
-        const newListMovie = listMovie.map(item => {
-            return {
+
+        listMovie.forEach(item => {
+            const newListMovie = {
+            
                 title : item.title,
                 date : item.release_date,
                 poster : ` https://image.tmdb.org/t/p/w500/${item.poster_path}`,
                 rating : item.rating,
                 overview : item.overview
+            
             }
+            console.log(newListMovie);
+            const movieGrid = document.querySelector('.movie-grid');
+            movieGrid.appendChild(createMovieCard(newListMovie));
         })
-        console.log(newListMovie);
-
-
-        const movieGrid = document.querySelector('.movie-grid');
-        movieGrid.appendChild(createMovieCard(newListMovie));
-        
-
     })
 
 

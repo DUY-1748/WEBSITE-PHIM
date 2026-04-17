@@ -54,31 +54,6 @@
         </div>
 
         <div class="movie-grid">
-            <div class="movie-card" onclick="window.location.href='index.php?page=chi-tiet'">
-                <div class="card-badge">FHD Vietsub</div>
-                <img src="https://image.tmdb.org/t/p/w500/8Y43POKjjKDGI9MH89NW0NAzzp8.jpg" alt="Poster 1"
-                    class="movie-poster">
-                <div class="movie-overlay">
-                    <div class="play-icon"><i class="ph-fill ph-play" style="color: #050505; font-size: 24px;"></i>
-                    </div>
-                </div>
-                <div class="movie-info glass">
-                    <h3 class="movie-card-title">Kẻ Hủy Diệt</h3>
-                    <p style="font-size: 12px; color: var(--gold);">2024 • Khoa học viễn tưởng</p>
-                </div>
-            </div>
-            <div class="movie-card" onclick="window.location.href='index.php?page=chi-tiet'">
-                <div class="card-badge">Tập 12 (Thuyết minh)</div>
-                <img src="https://image.tmdb.org/t/p/w500/sh7Rg8Er3tFcN9BpKIPOMvALgZd.jpg" alt="Poster 2"
-                    class="movie-poster">
-                <div class="movie-overlay">
-                    <div class="play-icon"><i class="ph-fill ph-play" style="color: #050505; font-size: 24px;"></i>
-                    </div>
-                </div>
-                <div class="movie-info glass">
-                    <h3 class="movie-card-title">Vương Quốc Bí Ẩn</h3>
-                    <p style="font-size: 12px; color: var(--gold);">Phim Bộ • 2024</p>
-                </div>
-            </div>
+            
         </div>
     </section>

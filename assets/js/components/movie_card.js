@@ -30,7 +30,7 @@ export const createMovieCard = (movie) => {
             <div style="position: absolute; top: 10px; left: 10px; background: #ffc107; 
                         color: black; font-weight: bold; font-size: 11px; padding: 4px 8px; 
                         border-radius: 4px; border: 1px solid rgba(0,0,0,0.5); z-index: 2;">
-                Tập 12 (Thuyết minh)
+                Movie (VietSub)
             </div>
 
             <div class="overlay" style="position: absolute; inset: 0; background: rgba(0,0,0,0.4); 
@@ -49,7 +49,7 @@ export const createMovieCard = (movie) => {
                     ${movie.title}
                 </h3>
                 <p style="margin: 5px 0 0; color: #ffc107; font-size: 13px;">
-                    Phim Bộ • ${releaseYear}
+                    Phim Mới • ${releaseYear}
                 </p>
             </div>
         </div>
