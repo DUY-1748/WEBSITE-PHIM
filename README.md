@@ -13,4 +13,4 @@ Dự án được chia module và thực hiện bởi nhóm gồm 6 thành viên
 | **3** | [ Chiến] | [MSSV 3] | 
 | **4** | [Nguyễn Cảnh Dinh] | [052206009031] | 
 | **5** | [Nguyễn Lữ Hòa Thịnh] | [052206010556] |  
-| **6** | [Phan Hoàng Tấn Dũng] | [MSSV 6] |  
+| **6** | [Phan Hoàng Tấn Dũng] | [075206004715] |  
