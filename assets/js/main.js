@@ -1,33 +1,70 @@
 /*js*/
 import { createMovieCard } from './components/movie_card.js';
-// api 
+import { MovieCardTop10 } from './components/rankingMovie.js';
 
 const apiMovie = '/WEBSITE-PHIM/api/get_movies.php';
-let listMovie = [];
 
-  fetch(apiMovie)
+fetch(apiMovie)
     .then(res => res.json())
     .then(data => {
+        const listMovie = data;
         
-        listMovie = data;
-        console.log("Dữ liệu gốc (data):", data);
-        console.log(listMovie);
+        
+        const movieArray = listMovie.map(item => ({
+            title: item.title,
+            date: item.release_date,
+            poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+            rating: item.rating,
+            overview: item.overview,
+            tmdb_id: item.id
+        }));
 
-        listMovie.forEach(item => {
-            const newListMovie = {
-            
-                title : item.title,
-                date : item.release_date,
-                poster : ` https://image.tmdb.org/t/p/w500/${item.poster_path}`,
-                rating : item.rating,
-                overview : item.overview
-            
+        
+        const movieGrid3 = document.querySelector('.movie-grid-3');
+        if (movieGrid3) {
+            for (let i = 0; i < Math.min(7, movieArray.length); i++) {
+                movieGrid3.appendChild(createMovieCard(movieArray[i]));
             }
-            console.log(newListMovie);
-            const movieGrid = document.querySelector('.movie-grid');
-            movieGrid.appendChild(createMovieCard(newListMovie));
-        })
+        }
+
+      
+        const movieGrid1 = document.querySelector('.movie-grid');
+        const movieGrid2 = document.querySelector('.movie-grid-2');
+        const allMoviePage = document.querySelector('.allmovie');
+
+        movieArray.forEach(movieData => {
+            
+            if (movieGrid1) movieGrid1.appendChild(createMovieCard(movieData));
+            if (allMoviePage) allMoviePage.appendChild(createMovieCard(movieData));
+
+           
+            const releaseYear = movieData.date ? movieData.date.split('-')[0] : '2024';
+            if (parseInt(releaseYear) < 2026 && movieGrid2) {
+                movieGrid2.appendChild(createMovieCard(movieData));
+            }
+        });
+
+        
+        const movieGrid4 = document.querySelector('.top-10-grid'); 
+        if (movieGrid4) {
+           
+            const top10Data = [...listMovie]
+                .sort((a, b) => b.rating - a.rating)
+                .slice(0, 10);
+
+            top10Data.forEach((item, index) => {
+                const top10CardData = {
+                    title: item.title,
+                    poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
+                    rating: item.rating,
+                    overview: item.overview
+                };
+                const movieElement = MovieCardTop10(top10CardData, index);
+                movieGrid4.appendChild(movieElement);
+            });
+        }
     })
+    .catch(err => console.error("Lỗi Fetch API:", err));
 
 
 

@@ -369,11 +369,15 @@ header {
 
 
 /* ---------------- MOVIE GRID ---------------- */
-.movie-grid {
+.movie-grid,
+.movie-grid-2,
+.movie-grid-3,
+.allmovie {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 25px;
 }
+
 
 .movie-card {
     position: relative;

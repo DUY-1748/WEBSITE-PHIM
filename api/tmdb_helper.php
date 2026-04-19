@@ -1,16 +1,22 @@
 <?php
+
 // Định nghĩa API Key của bạn tại đây
 define('TMDB_API_KEY', '31467640e90c18ee16fab8bf8993dd38');
 define('TMDB_BASE_URL', 'https://api.themoviedb.org/3/');
 
+
+
+
+
 /**
  * Hàm gọi API TMDB sử dụng cURL
  */
-function getMovieData($endpoint, $additionalParams = []) {
+function getMovieData($endpoint, $page = 1,$additionalParams = []) {
     // 1. Chuẩn bị tham số mặc định (luôn có API Key và tiếng Việt)
     $defaultParams = [
         'api_key' => TMDB_API_KEY,
-        'language' => 'vi-VN'
+        'language' => 'vi-VN',
+        'page' => $page 
     ];
     
     // Gộp tham số mặc định với tham số người dùng truyền vào 

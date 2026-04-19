@@ -4,9 +4,6 @@
 
 
 
-
-
-
 ?>
 
 
@@ -56,4 +53,27 @@
         <div class="movie-grid">
             
         </div>
+        <div class="section-header" style="padding-top:40px;">
+            <h2 class="section-title">Phim Chiếu Rạp Hot</h2>
+            <a href="index.php?page=loc-phim" style="color: var(--gold); font-size: 14px;">Xem tất cả <i class="ph ph-arrow-right"></i></a>
+        </div>
+        <div class="movie-grid-2">
+            
+        </div>
+        <div class="section-header" style="padding-top:40px;">
+            <h2 class="section-title">Phim Hay Đỉnh Nóc Kịch Trần</h2>
+            <a href="index.php?page=loc-phim" style="color: var(--gold); font-size: 14px;">Xem tất cả <i class="ph ph-arrow-right"></i></a>
+        </div>
+        <div class="movie-grid-3">
+            
+        </div>
+
+        <div class="section-header" style="padding-top:40px;">
+            <h2 class="section-title">Top Phim Hay Hôm Nay</h2>
+            <a href="index.php?page=loc-phim" style="color: var(--gold); font-size: 14px;">Xem tất cả <i class="ph ph-arrow-right"></i></a>
+        </div>
+        <div class="movie-grid-4 flex gap-6 p-10 overflow-x-auto min-h-[500px] items-start bg-[#0f1014]">
+            
+        </div>
+
     </section>

@@ -9,7 +9,14 @@ require_once '../core/config.php';          // Kết nối DB
 require_once 'tmdb_helper.php';           // File chứa hàm getMovieData (cURL)
 
 // 1. Gọi hàm cURL để lấy phim phổ biến từ TMDB
-$tmdbData = getMovieData('movie/popular');
+
+$Data1 = getMovieData('movie/popular', 1);
+$Data2 = getMovieData('movie/popular', 2);
+$movies1 = isset($Data1['results']) ? $Data1['results'] : [];
+$movies2 = isset($Data2['results']) ? $Data2['results'] : [];
+
+$tmdbData = array_merge($Data1,$Data2);
+
 
 if (isset($tmdbData['results'])) {
     foreach ($tmdbData['results'] as $movie) {
