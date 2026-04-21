@@ -1,10 +1,18 @@
 <?php 
 $host = 'localhost';
-$db = 'lang_phim_db';
+$db = 'website_phim';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
 
+// 1. Kết nối kiểu MySQLi (Cho các file admin hiện tại)
+$conn = mysqli_connect($host, $user, $pass, $db);
+mysqli_set_charset($conn, $charset);
+
+if (!$conn) {
+    die("Lỗi kết nối MySQLi: " . mysqli_connect_error());
+}
+// 2. Kết nối kiểu PDO (Cho file get_movies.php và đồng bộ API)
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset"; // address
 $options = [
     PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, // Hiện lỗi nếu kết nối thất bại
