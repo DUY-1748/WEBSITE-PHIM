@@ -371,7 +371,12 @@ header {
 /* ---------------- MOVIE GRID ---------------- */
 .movie-grid,
 .movie-grid-2,
-.movie-grid-3,
+.movie-grid-3 {
+    display:flex;
+    gap:30px;
+}
+
+
 .allmovie {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));

@@ -14,7 +14,8 @@ switch ($page) {
         include 'views/category.php'; 
         break;
     case 'watch':
-        include 'views/watch.php';
+        include 'views/movie-detail.php';
+        break;
     default:
         echo '<div style="text-align:center; padding: 100px;"><h2>404 - Không tìm thấy trang!</h2></div>';
         break;

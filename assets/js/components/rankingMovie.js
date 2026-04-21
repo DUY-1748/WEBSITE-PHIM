@@ -1,82 +1,141 @@
 // assets/js/components/rankingMovie.js
 
 export const MovieCardTop10 = (movie, index) => {
-    // 1. Tạo biến Topmovie là một DOM Element chuẩn
     const Topmovie = document.createElement('div');
-    // Class chính (Thêm w-full để nó co giãn theo Grid)
-    Topmovie.className = "relative group flex-shrink-0 w-full min-w-[170px] sm:w-[190px] cursor-pointer transition-all duration-300";
+    
+    // 1. Style cho Container chính (thay thế class relative, group, flex-shrink-0...)
+    Topmovie.style.cssText = `
+        position: relative;
+        flex-shrink: 0;
+        width: 250px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-right: 24px;
+    `;
 
-    // 2. Nội dung HTML bên trong (Sử dụng Template String cho gọn)
-    // Các Class Tailwind đã được tinh chỉnh theo mẫu ảnh
     Topmovie.innerHTML = `
-        <span class="absolute -bottom-8 -left-3 text-7xl font-black text-yellow-500 italic z-20 select-none drop-shadow-[0_2px_15px_rgba(0,0,0,1)] opacity-90">
+        <span style="
+            position: absolute;
+            bottom: -32px;
+            left: -12px;
+            font-size: 72px;
+            font-weight: 900;
+            color: #eab308;
+            font-style: italic;
+            z-index: 20;
+            user-select: none;
+            filter: drop-shadow(0 2px 10px rgba(0,0,0,1));
+            opacity: 0.9;
+            font-family: sans-serif;
+        ">
             ${index + 1}
         </span>
 
-        <div class="relative rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.6)] border border-black/20 aspect-[2/3] z-10 transition-transform duration-300 group-hover:scale-105">
+        <div class="poster-container" style="
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+            border: 1px solid rgba(0,0,0,0.2);
+            aspect-ratio: 2/3;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        ">
             <img 
                 src="${movie.poster}" 
-                alt="${movie.title}" 
-                class="w-full h-full object-cover"
+                style="width: 100%; height: 100%; object-fit: cover;"
                 loading="lazy"
             >
-            <div class="absolute bottom-2 right-2 flex gap-1 z-10">
-                <span class="bg-green-600/90 backdrop-blur-sm text-[9px] px-2 py-0.5 rounded font-bold text-white shadow-md">T.Minh</span>
-                <span class="bg-blue-600/90 backdrop-blur-sm text-[9px] px-2 py-0.5 rounded font-bold text-white shadow-md">HT</span>
+            <div style="position: absolute; bottom: 8px; right: 8px; display: flex; gap: 4px; z-index: 10;">
+                <span style="background: rgba(22, 163, 74, 0.9); padding: 2px 8px; border-radius: 4px; font-size: 9px; font-weight: bold; color: white;">T.Minh</span>
+                <span style="background: rgba(37, 99, 235, 0.9); padding: 2px 8px; border-radius: 4px; font-size: 9px; font-weight: bold; color: white;">HT</span>
             </div>
         </div>
 
-        <div class="mt-4 pl-8 group-hover:opacity-60 transition-opacity">
-            <h3 class="text-white text-sm font-semibold truncate transition-colors group-hover:text-yellow-500">
+        <div style="margin-top: 16px; padding-left: 32px;">
+            <h3 style="color: white; font-size: 14px; font-weight: 600; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-family: sans-serif;">
                 ${movie.title}
             </h3>
-            <p class="text-gray-400 text-xs mt-1 font-medium truncate">
-                ${movie.latest_episode || 'Tập mới'} / ${movie.quality || 'HD'}
+            <p style="color: #9ca3af; font-size: 12px; margin-top: 4px; font-family: sans-serif;">
+                Tập mới / HD
             </p>
         </div>
 
-        <div class="absolute top-1/2 left-full ml-5 -translate-y-1/2 w-[300px] bg-[#1a1c24] rounded-2xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] 
-                    border border-white/10
-                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
-                    scale-95 group-hover:scale-100 transition-all duration-300 z-[100] 
-                    pointer-events-none group-hover:pointer-events-auto">
+        <div class="movie-popup" style="
+            position: absolute;
+            top: 50%;
+            left: -30%;
+            margin-left: 20px;
+            transform: translateY(-50%) scale(0.95);
+            width: 280px;
+            background: #1a1c24;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            border: 1px solid rgba(255,255,255,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            pointer-events: none;
+        ">
+            <div style="
+                position: absolute;
+                inset: 0;
+                background-image: url('${movie.poster}');
+                background-size: cover;
+                background-position: center;
+                opacity: 0.1;
+                border-radius: 16px;
+            "></div>
             
-            <div class="absolute inset-0 bg-cover bg-center opacity-10 rounded-2xl" style="background-image: url('${movie.poster}')"></div>
-            
-            <div class="relative z-10">
-                <h3 class="text-white font-black text-xl leading-tight mb-1 truncate">${movie.title}</h3>
-                <p class="text-yellow-500 text-[11px] font-medium italic mb-5">Làng Phim Exclusive</p>
+            <div style="position: relative; z-index: 10; font-family: sans-serif;">
+                <h3 style="color: white; font-weight: 800; font-size: 18px; margin: 0; line-height: 1.2;">${movie.title}</h3>
+                <p style="color: #eab308; font-size: 11px; font-style: italic; margin: 4px 0 20px 0;">Làng Phim Exclusive</p>
 
-                <div class="flex items-center gap-2 mb-5">
-                    <button class="bg-yellow-500 hover:bg-yellow-400 text-black px-5 py-2.5 rounded-lg text-sm font-black flex items-center gap-2 transition-transform active:scale-95">
-                        <i class="fas fa-play"></i> Xem ngay
-                    </button>
-                    <button class="bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-lg text-sm transition-colors" title="Thêm vào yêu thích">
-                        <i class="far fa-heart"></i>
-                    </button>
-                    <button class="bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-lg text-sm transition-colors" title="Thông tin chi tiết">
-                        <i class="fas fa-info-circle"></i>
+                <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+                    <button class="btn-play" style="background: #eab308; color: black; border: none; padding: 10px 20px; border-radius: 8px; font-size: 12px; font-weight: 900; cursor: pointer;">
+                        ▶ Xem ngay
                     </button>
                 </div>
 
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <span class="bg-yellow-500/10 text-yellow-500 px-2 py-0.5 rounded border border-yellow-500/30 text-[11px] font-bold shadow-inner">⭐ ${movie.rating || '8.9'}</span>
-                    <span class="bg-white/5 text-gray-300 px-2 py-0.5 rounded text-[11px] font-medium">${movie.releaseYear || '2026'}</span>
-                    <span class="bg-white/5 text-gray-300 px-2 py-0.5 rounded text-[11px] font-medium">UltraHD</span>
-                    <span class="bg-white/5 text-gray-300 px-2 py-0.5 rounded text-[11px] font-medium">Full: ${movie.totalEpisodes || '30'} Tập</span>
+                <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px;">
+                    <span style="background: rgba(234, 179, 8, 0.1); color: #eab308; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(234, 179, 8, 0.3); font-size: 11px; font-weight: bold;">⭐ ${movie.rating || '8.9'}</span>
+                    <span style="background: rgba(255,255,255,0.05); color: #d1d5db; padding: 2px 8px; border-radius: 4px; font-size: 11px;">2026</span>
+                    <span style="background: rgba(255,255,255,0.05); color: #d1d5db; padding: 2px 8px; border-radius: 4px; font-size: 11px;">UltraHD</span>
                 </div>
                 
-                <p class="text-gray-400 text-xs leading-relaxed line-clamp-3 mb-4">
-                    ${movie.overview || 'Chưa có mô tả cho bộ phim này. Vui lòng cập nhật sau...'}
+                <p style="color: #9ca3af; font-size: 12px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 16px;">
+                    ${movie.overview || 'Nội dung đang được cập nhật...'}
                 </p>
-                
-                <div class="pt-3 border-t border-white/5">
-                    <p class="text-[10px] text-gray-500">Thể loại: <span class="text-gray-300">Hành động, Phiêu lưu, Viễn tưởng</span></p>
-                </div>
             </div>
         </div>
     `;
 
-    
+    // 2. Xử lý hiệu ứng Hover bằng JavaScript (Vì style.cssText không hỗ trợ :hover)
+    const popup = Topmovie.querySelector('.movie-popup');
+    const poster = Topmovie.querySelector('.poster-container');
+
+    Topmovie.onmouseenter = () => {
+        popup.style.opacity = "1";
+        popup.style.visibility = "visible";
+        popup.style.transform = "translateY(-50%) scale(1)";
+        poster.style.transform = "scale(1.05)";
+    };
+
+    Topmovie.onmouseleave = () => {
+        popup.style.opacity = "0";
+        popup.style.visibility = "hidden";
+        popup.style.transform = "translateY(-50%) scale(0.95)";
+        poster.style.transform = "scale(1)";
+    };
+
+    // 3. Xử lý sự kiện click chuyển hướng
+    const btnPlay = Topmovie.querySelector('.btn-play');
+    btnPlay.onclick = (e) => {
+        e.stopPropagation();
+        window.location.href = `index.php?page=watch&id=${movie.tmdb_id}`;
+    };
+
     return Topmovie;
 };

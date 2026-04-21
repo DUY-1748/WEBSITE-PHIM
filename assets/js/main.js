@@ -1,6 +1,51 @@
 /*js*/
 import { createMovieCard } from './components/movie_card.js';
 import { MovieCardTop10 } from './components/rankingMovie.js';
+import { renderMovieDetail } from './components/movieDetail.js';
+
+
+const loadWatchPage = (listMovie) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const page = urlParams.get('page');
+    const movieId = urlParams.get('id');
+    console.log("ID từ URL:", movieId);
+    console.log("Danh sách phim đang có:", listMovie);
+
+   
+    if (page === 'watch' && movieId) {
+        const container = document.querySelector('.detail');
+        if (!container) return;
+
+     
+        const movie = listMovie.find(m => String(m.id) === String(movieId));
+        console.log("Kết quả tìm kiếm:", movie);
+
+        if (movie) {
+            
+            const movieData = {
+                ...movie,
+                poster: movie.poster_path.startsWith('http') ? movie.poster_path : `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+                backdrop: movie.backdrop_path && movie.backdrop_path.startsWith('http') ? movie.backdrop_path : `https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
+                date: movie.release_date,
+                rating: movie.rating
+            };
+
+            const related = listMovie.filter(m => String(m.tmdb_id) !== String(movieId));
+            
+            container.innerHTML = ''; 
+            
+            container.appendChild(renderMovieDetail(movieData, related));
+            
+            // Cuộn lên đầu trang
+            window.scrollTo(0, 0);
+        } else {
+            container.innerHTML = `<h2 style="color:white; padding:100px; text-align:center;">Phim đang được cập nhật...</h2>`;
+        }
+    }
+};
+
+
+
 
 const apiMovie = '/WEBSITE-PHIM/api/get_movies.php';
 
@@ -8,7 +53,7 @@ fetch(apiMovie)
     .then(res => res.json())
     .then(data => {
         const listMovie = data;
-        
+        loadWatchPage(listMovie);
         
         const movieArray = listMovie.map(item => ({
             title: item.title,
@@ -16,18 +61,19 @@ fetch(apiMovie)
             poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
             rating: item.rating,
             overview: item.overview,
+            background: `https://image.tmdb.org/t/p/w500${item.background_path}`,
             tmdb_id: item.id
         }));
 
         
         const movieGrid3 = document.querySelector('.movie-grid-3');
         if (movieGrid3) {
-            for (let i = 0; i < Math.min(7, movieArray.length); i++) {
+            for (let i = 0; i < Math.min(9, movieArray.length); i++) {
                 movieGrid3.appendChild(createMovieCard(movieArray[i]));
             }
         }
 
-      
+        
         const movieGrid1 = document.querySelector('.movie-grid');
         const movieGrid2 = document.querySelector('.movie-grid-2');
         const allMoviePage = document.querySelector('.allmovie');
@@ -44,13 +90,13 @@ fetch(apiMovie)
             }
         });
 
-        
-        const movieGrid4 = document.querySelector('.top-10-grid'); 
+        // Top Phim Hôm Nay 
+        const movieGrid4 = document.querySelector('.movie-grid-4'); 
         if (movieGrid4) {
            
             const top10Data = [...listMovie]
                 .sort((a, b) => b.rating - a.rating)
-                .slice(0, 10);
+                .slice(0, 24);
 
             top10Data.forEach((item, index) => {
                 const top10CardData = {
@@ -63,6 +109,10 @@ fetch(apiMovie)
                 movieGrid4.appendChild(movieElement);
             });
         }
+       
+       
+                
+        
     })
     .catch(err => console.error("Lỗi Fetch API:", err));
 
@@ -74,7 +124,8 @@ fetch(apiMovie)
 
 
 
-    
+
+
 
 
 

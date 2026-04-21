@@ -6,18 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Streaming Phim Hiện Đại</title>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script>
-        tailwind.config = {
-        theme: {
-            extend: {
-            colors: {
-                'main-dark': '#1a1c24',
-            }
-            }
-        }
-        }
-    </script>
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 

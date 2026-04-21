@@ -1,1 +1,3 @@
-// Trang chi tiết phim
+<section class="detail">
+        
+    </section>
