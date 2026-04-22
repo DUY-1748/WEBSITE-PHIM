@@ -51,5 +51,33 @@ function getMovieData($endpoint, $page = 1,$additionalParams = []) {
     // 7. Chuyển đổi JSON sang mảng PHP và trả về
     return json_decode($response, true);
 }
+/**
+ * Hàm lấy mã trailer YouTube từ TMDB
+ */
+function getMovieVideos($movieId) {
+    $endpoint = "movie/" . $movieId . "/videos";
+    // Thử lấy video tiếng Việt trước
+    $data = getMovieData($endpoint, 1, ['language' => 'vi-VN']);
+    
+    // Nếu tiếng Việt không có video, thử lấy tiếng Anh (nguồn video dồi dào nhất)
+    if (!isset($data['results']) || empty($data['results'])) {
+        $data = getMovieData($endpoint, 1, ['language' => 'en-US']);
+    }
 
+    if (isset($data['results']) && !empty($data['results'])) {
+        // Ưu tiên 1: Tìm đúng "Trailer" trên "YouTube"
+        foreach ($data['results'] as $video) {
+            if ($video['site'] === 'YouTube' && $video['type'] === 'Trailer') {
+                return $video['key'];
+            }
+        }
+        // Ưu tiên 2: Nếu không có Trailer, lấy đại video đầu tiên (Teaser, Clip...)
+        foreach ($data['results'] as $video) {
+            if ($video['site'] === 'YouTube') {
+                return $video['key'];
+            }
+        }
+    }
+    return null; // Trường hợp cực hiếm: Phim không có bất cứ clip nào
+}
 ?>

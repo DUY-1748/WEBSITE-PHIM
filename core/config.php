@@ -1,8 +1,9 @@
 <?php 
-$host = 'localhost';
-$db = 'lang_phim_db';
-$user = 'root';
-$pass = '';
+// Đã thay đổi thành thông tin Database trên mạng (freesqldatabase)
+$host = 'localhost';      // Thay cho sql12.freesqldatabase.com
+$db   = 'sql6464118';    // Tên Database 
+$user = 'root';           // Mặc định của XAMPP luôn là root
+$pass = '';               // Mặc định của XAMPP là để trống (không có mật khẩu)
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset"; // address
