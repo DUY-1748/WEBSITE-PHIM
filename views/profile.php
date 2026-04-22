@@ -73,7 +73,7 @@
                 <input type="text" value="Trường Học"> </div>
             <div class="info-group">
                 <label>Email</label>
-                <input type="email" value="truonghoc@gmail.com" readonly>
+                <input type="email" value="truonghoc@gmail.com">
             </div>
             <div class="save-btn-container">
                 <button class="action-btn">Cập nhật hồ sơ</button>
