@@ -131,9 +131,8 @@ export const MovieCardTop10 = (movie, index) => {
     };
 
     // 3. Xử lý sự kiện click chuyển hướng
-    const btnPlay = Topmovie.querySelector('.btn-play');
-    btnPlay.onclick = (e) => {
-        e.stopPropagation();
+    
+    Topmovie.onclick = (e) => {
         window.location.href = `index.php?page=watch&id=${movie.tmdb_id}`;
     };
 

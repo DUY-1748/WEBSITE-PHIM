@@ -1,4 +1,4 @@
-<section class="hero">
+<section class="hero" id="home">
         <div class="hero-overlay"></div>
         <div class="hero-content">
             <div class="hero-meta">

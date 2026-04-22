@@ -16,7 +16,7 @@
         <div class="logo">Làng Phim.</div>
 
        <ul class="nav-menu">
-            <li><a href="home">Trang chủ</a></li>
+            <li><a href="index.php?page=home">Trang chủ</a></li>
             <li><a href="loc-phim">Chủ đề</a></li>
             <li class="mega-menu-trigger">
                 <a href="#">Thể loại <i class="ph ph-caret-down"></i></a>
@@ -42,11 +42,15 @@
         </ul>
 
         <div class="nav-actions">
-            <div class="search-box">
-                <i class="ph ph-magnifying-glass"
-                    style="position: absolute; left: 10px; top: 10px; color: var(--text-secondary);"></i>
-                <input type="text" placeholder="Tìm kiếm phim, diễn viên...">
-            </div>
+           <form action="index.php" method="GET">
+                <div class="search-box">
+                    <i class="ph ph-magnifying-glass"
+                        style="position: absolute; left: 10px; top: 10px; color: var(--text-secondary);"></i>
+                    <input type="text" id="search_input" name="search" placeholder="Tìm kiếm phim, diễn viên...">
+                </div>
+                <div id="search-suggestions" class="suggestions-dropdown" ></div>
+            </form>
+
 
             <button class="btn-gold" id="loginBtn">Đăng nhập</button>
 

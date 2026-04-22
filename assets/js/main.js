@@ -2,7 +2,7 @@
 import { createMovieCard } from './components/movie_card.js';
 import { MovieCardTop10 } from './components/rankingMovie.js';
 import { renderMovieDetail } from './components/movieDetail.js';
-
+import { renderSearchSuggestions } from './components/suggestionMovie.js';
 
 const loadWatchPage = (listMovie) => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -68,7 +68,7 @@ fetch(apiMovie)
         
         const movieGrid3 = document.querySelector('.movie-grid-3');
         if (movieGrid3) {
-            for (let i = 0; i < Math.min(9, movieArray.length); i++) {
+            for (let i = Math.min(9, movieArray.length); i >= 0  ; i--) {
                 movieGrid3.appendChild(createMovieCard(movieArray[i]));
             }
         }
@@ -85,9 +85,10 @@ fetch(apiMovie)
 
            
             const releaseYear = movieData.date ? movieData.date.split('-')[0] : '2024';
-            if (parseInt(releaseYear) < 2026 && movieGrid2) {
+            if (parseInt(releaseYear) === 2026 && movieGrid2 ) {
                 movieGrid2.appendChild(createMovieCard(movieData));
             }
+            
         });
 
         // Top Phim Hôm Nay 
@@ -103,18 +104,59 @@ fetch(apiMovie)
                     title: item.title,
                     poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
                     rating: item.rating,
-                    overview: item.overview
+                    overview: item.overview,
+                    background: `https://image.tmdb.org/t/p/w500${item.background_path}`,
+                    tmdb_id: item.id
                 };
+                loadWatchPage(top10Data)
                 const movieElement = MovieCardTop10(top10CardData, index);
                 movieGrid4.appendChild(movieElement);
             });
         }
        
+
+
+        // xử lý search before enter event 
+
+        const dataInput = document.querySelector('#search_input');
+        const searchSuggestion = document.querySelector('#search-suggestions');
+
+        dataInput.addEventListener('input',(event) => {
+            const keyWork = event.target.value.toLowerCase().trim();
+            if (keyWork === "") {
+                searchSuggestion.style.display = 'none';
+                searchSuggestion.innerHTML = ''; // Xóa sạch nội dung bên trong
+                return; 
+            }
+            if (!listMovie || listMovie.length === 0) {
+                console.error("Dữ liệu listMovie đang rỗng, không thể search live!");
+                return;
+            }
+            const Suggestion = listMovie.filter(item => {
+                return item.title.toLowerCase().includes(keyWork);
+               
+            });
+
+        console.log("Kết quả tìm được:", Suggestion);
+        renderSearchSuggestions(Suggestion);
+        });
+        
+
        
                 
         
     })
-    .catch(err => console.error("Lỗi Fetch API:", err));
+    
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -3,19 +3,22 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-header('Content-Type: application/json'); 
+// header('Content-Type: application/json'); 
 require_once '../core/config.php';          
 require_once 'tmdb_helper.php';           
+set_time_limit(120); 
 
-// 1. Lấy dữ liệu từ 2 trang
-$Data1 = getMovieData('movie/popular', 1);
-$Data2 = getMovieData('movie/popular', 2);
+$totalPages = 5; // Đảm bảo không có ký tự lạ sau dấu chấm phẩy
+$allTmdbMovies = [];
 
-$movies1 = isset($Data1['results']) ? $Data1['results'] : [];
-$movies2 = isset($Data2['results']) ? $Data2['results'] : [];
-
-// GỘP MẢNG RESULTS LẠI VỚI NHAU (Chuẩn nhất)
-$allTmdbMovies = array_merge($movies1, $movies2);
+for ($i = 1; $i <= $totalPages; $i++) {
+    $data = getMovieData('movie/popular', $i);
+    
+    if (isset($data['results']) && is_array($data['results'])) {
+        // Sử dụng toán tử gộp mảng thay vì array_merge trong vòng lặp lớn để tối ưu hơn
+        $allTmdbMovies = array_merge($allTmdbMovies, $data['results']);
+    }
+}
 
 if (!empty($allTmdbMovies)) {
     foreach ($allTmdbMovies as $movie) {

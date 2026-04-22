@@ -1,6 +1,6 @@
 <?php 
 $host = 'localhost';
-$db = 'website_phim';
+$db = 'lang_phim_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
