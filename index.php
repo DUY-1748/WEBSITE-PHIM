@@ -1,9 +1,13 @@
 <?php
+
+
 // 1. Lấy tham số 'page' trên thanh URL
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
 // 2. Nhúng HEADER
 include 'includes/header.php';
+
+
 
 // 3. XỬ LÝ ĐỊNH TUYẾN (ROUTING)
 switch ($page) {
@@ -18,6 +22,8 @@ switch ($page) {
         break;
     case 'watching':
         include 'views/watch.php';
+    case 'search';
+        include 'views/search.php';
         break;
     default:
         include 'views/home.php';
