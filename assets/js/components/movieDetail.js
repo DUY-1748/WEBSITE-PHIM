@@ -14,6 +14,7 @@ export const renderMovieDetail = (movie, relatedMovies) => {
         width: 100%;
     `;
 
+    // CHỈ GÁN INNERHTML MỘT LẦN DUY NHẤT
     container.innerHTML = `
         <div style="position: relative; height: 600px; width: 100%; overflow: hidden;">
             <div style="
@@ -85,9 +86,35 @@ export const renderMovieDetail = (movie, relatedMovies) => {
                 PHIM ĐỀ XUẤT
             </h2>
             <div class="related-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 25px;">
-                </div>
+            </div>
         </div>
     `;
+
+    // XỬ LÝ NÚT BẤM VÀ HIỆU ỨNG (Sau khi innerHTML đã ổn định)
+    const watchBtn = container.querySelector('#btn-watch-main');
+    if (watchBtn) {
+        watchBtn.style.transition = "0.3s all ease";
+
+        // Hiệu ứng nổi lên khi rê chuột
+        watchBtn.onmouseover = () => {
+            watchBtn.style.transform = "scale(1.05) translateY(-5px)";
+            watchBtn.style.filter = "brightness(1.1)";
+            watchBtn.style.boxShadow = "0 10px 20px rgba(255, 193, 7, 0.3)";
+        };
+
+        watchBtn.onmouseout = () => {
+            watchBtn.style.transform = "scale(1) translateY(0)";
+            watchBtn.style.filter = "brightness(1)";
+            watchBtn.style.boxShadow = "none";
+        };
+        
+        // Sự kiện click để sang trang xem phim
+        watchBtn.onclick = () => {
+            // movie.tmdb_id hoặc movie.id tùy thuộc vào Database của bạn
+            const id = movie.tmdb_id || movie.id; 
+            window.location.href = `index.php?page=watching&id=${id}`;
+        };
+    }
 
     return container;
 };

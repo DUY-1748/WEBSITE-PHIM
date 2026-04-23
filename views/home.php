@@ -15,25 +15,6 @@
         </div>
     </section>
 
-    <section class="section-container">
-        <div class="section-header">
-            <h2 class="section-title">Lịch Chiếu Trong Tuần</h2>
-        </div>
-
-        <div class="schedule-bar">
-            <button class="day-btn glass">Thứ 2</button>
-            <button class="day-btn glass">Thứ 3</button>
-            <button class="day-btn glass">Thứ 4</button>
-            <button class="day-btn glass active">Hôm nay (Thứ 5)</button>
-            <button class="day-btn glass">Thứ 6</button>
-            <button class="day-btn glass">Thứ 7</button>
-            <button class="day-btn glass">Chủ Nhật</button>
-        </div>
-
-        <p style="color: var(--text-secondary); margin-top: 15px; font-size: 14px;">Hiển thị danh sách phim ra tập mới
-            trong Thứ 5...</p>
-    </section>
-
     <section class="section-container " style="padding-top: 0;">
         <div class="section-header">
             <h2 class="section-title">Phim Mới Cập Nhật</h2>

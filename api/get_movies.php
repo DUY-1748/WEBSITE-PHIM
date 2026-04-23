@@ -22,14 +22,17 @@ for ($i = 1; $i <= $totalPages; $i++) {
 
 if (!empty($allTmdbMovies)) {
     foreach ($allTmdbMovies as $movie) {
-        // 2. Kiểm tra trùng lặp
+        // 2. Kiểm tra xem phim đã tồn tại trong Database chưa
         $stmt = $pdo->prepare("SELECT id FROM movies WHERE tmdb_id = ?");
         $stmt->execute([$movie['id']]);
         
         if (!$stmt->fetch()) {
-            // 3. INSERT (ĐÃ SỬA: backdrop_path -> backdrop)
-            $sql = "INSERT INTO movies (tmdb_id, title, overview, poster_path, backdrop_path, release_date, rating) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?)";
+            // --- BƯỚC MỚI: Lấy mã Trailer từ TMDB trước khi Insert ---
+            $video_key = getMovieVideos($movie['id']); 
+
+            // 3. Insert dữ liệu mới (bao gồm cả backdrop_path và video_key)
+            $sql = "INSERT INTO movies (tmdb_id, title, overview, poster_path, backdrop_path, release_date, rating, video_key) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             $insertStmt = $pdo->prepare($sql);
             
             try {
@@ -38,19 +41,19 @@ if (!empty($allTmdbMovies)) {
                     $movie['title'],
                     $movie['overview'],
                     $movie['poster_path'],
-                    $movie['backdrop_path'], // Dữ liệu từ TMDB
+                    $movie['backdrop_path'], 
                     $movie['release_date'] ?: '2024-01-01',
-                    $movie['vote_average']
+                    $movie['vote_average'],
+                    $video_key // Lưu mã YouTube vào đây
                 ]);
             } catch (PDOException $e) {
-                // Nếu lỗi, log ra để debug nhưng không làm chết app
                 error_log("Lỗi Insert: " . $e->getMessage());
             }
         }
     }
 }
 
-// 4. Lấy dữ liệu từ MySQL trả về cho Frontend
+// 4. Trả dữ liệu về cho Frontend (Lúc này dữ liệu đã có video_key)
 try {
     $stmt = $pdo->query("SELECT * FROM movies ORDER BY id DESC");
     $movies = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -59,4 +62,3 @@ try {
     echo json_encode(["error" => $e->getMessage()]);
 }
 exit;
-?>
