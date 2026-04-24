@@ -14,7 +14,6 @@
                 <span>Thêm phim mới</span>
             </a>
         </li>
-        <li><a href="manage-episodes.php"><i class="fas fa-film"></i> Quản lý Tập phim</a></li>
         <li><a href="manage-comments.php"><i class="fas fa-comments"></i> Quản lý Bình luận</a></li>
         <li><a href="manage-users.php"><i class="fas fa-users"></i> Quản lý User</a></li>
     </ul>
