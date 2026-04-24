@@ -42,4 +42,17 @@ if (isset($_POST['login'])) {
         exit;
     }
 }
+// Trong file api/login_submit.php
+if ($user && password_verify($password, $user['password'])) {
+    
+    // THÊM ĐOẠN NÀY: Kiểm tra nếu tài khoản bị khóa
+    if (isset($user['status']) && $user['status'] == 0) {
+        header("Location: ../index.php?page=login&error=account_locked");
+        exit();
+    }
+
+    // Nếu không bị khóa thì mới tạo Session
+    $_SESSION['user_id'] = $user['user_id'];
+    // ... các code lưu session khác ...
+}
 ?>
