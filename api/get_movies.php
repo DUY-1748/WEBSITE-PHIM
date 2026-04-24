@@ -8,7 +8,7 @@ require_once '../core/config.php';
 require_once 'tmdb_helper.php';           
 set_time_limit(120); 
 
-$totalPages = 5; 
+$totalPages = 1; 
 $allTmdbMovies = [];
 
 for ($i = 1; $i <= $totalPages; $i++) {
