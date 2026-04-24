@@ -92,20 +92,20 @@ include 'sidebar.php';
                     <th>ID</th>
                     <th>Poster</th>
                     <th>Tên Phim</th>
-                    <th>Thể loại</th>
+                    <th>Điểm</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $result = mysqli_query($conn, "SELECT * FROM movies ORDER BY id DESC");
-                if (mysqli_num_rows($result) > 0) {
-                    while($row = mysqli_fetch_assoc($result)): ?>
+                $result = $pdo->query("SELECT * FROM movies ORDER BY id DESC");
+                if ($result && $result->rowCount() > 0) {
+                    while($row = $result->fetch(PDO::FETCH_ASSOC)): ?>
                     <tr>
                         <td><?= $row['id'] ?></td>
-                        <td><img src="../assets/img/<?= $row['poster'] ?>" width="50" height="70" style="border-radius:4px;"></td>
-                        <td style="font-weight: bold; color: var(--primary);"><?= $row['movie_name'] ?></td>
-                        <td style="font-size: 13px; color: #ccc;"><?= $row['genre'] ?></td>
+                        <td><img src="https://image.tmdb.org/t/p/w500<?= $row['poster_path'] ?>" width="50" height="70" style="border-radius:4px;"></td>
+                        <td style="font-weight: bold; color: var(--primary);"><?= $row['title'] ?></td>
+                        <td style="font-size: 13px; color: #ccc;"><?= $row['rating'] ?></td>
                         <td>
                             <a href="edit-movie.php?id=<?= $row['id'] ?>" style="color: #3498db; text-decoration:none; margin-right: 15px;">
                                 <i class="fas fa-edit"></i> Sửa

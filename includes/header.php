@@ -52,7 +52,9 @@
             </form>
 
 
-            <button class="btn-gold" id="loginBtn">Đăng nhập</button>
+            <a href="index.php?page=login" class="btn-gold" id="loginBtn" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
+             Đăng nhập
+            </a>
 
             <div class="user-menu" id="userMenu">
                 <img src="https://i.pravatar.cc/150?img=11" alt="Avatar" class="avatar">
@@ -68,71 +70,5 @@
         </div>
     </header>
 
-    <div class="modal-overlay" id="authModal">
-        <div class="auth-modal glass" id="authBox">
-            <i class="ph ph-x close-modal" id="closeModal"></i>
-            
-            <div class="auth-views-container" id="authViews">
-                
-                <div class="auth-view login-view">
-                    <div class="auth-header">
-                        <h2>Đăng Nhập</h2>
-                        <p style="color: var(--text-secondary); font-size: 14px;">Đăng nhập để xem tiếp phim đang dở</p>
-                    </div>
-
-                    <form id="loginForm">
-                        <div class="form-group" id="emailGroup">
-                            <label>Địa chỉ Email</label>
-                            <input type="email" id="emailInput" placeholder="VD: member@moviebasket.com">
-                            <div class="error-msg">Email không được để trống</div>
-                        </div>
-                        <div class="form-group" id="passwordGroup">
-                            <label>Mật khẩu</label>
-                            <input type="password" id="passInput" placeholder="••••••••">
-                            <div class="error-msg">Sai mật khẩu! Hãy thử lại.</div>
-                        </div>
-
-                        <button type="submit" class="btn-primary">Đăng Nhập <i class="ph ph-arrow-right"></i></button>
-                    </form>
-
-                    <div class="auth-divider">
-                        <span style="background: var(--card-bg); padding: 0 10px; color: var(--text-secondary); font-size: 12px; position: relative; z-index: 1;">Hoặc</span>
-                    </div>
-
-                    <button class="btn-social">
-                        <img src="https://img.icons8.com/color/48/000000/google-logo.png" style="width: 20px;" alt="Google">
-                        Đăng nhập với Google
-                    </button>
-
-                    <div class="auth-footer">
-                        Chưa có tài khoản? <span id="switchToRegister" style="cursor: pointer; color: var(--primary-color);">Đăng ký ngay</span>
-                    </div>
-                </div>
-
-                <div class="auth-view register-view">
-                    <div class="auth-header">
-                        <h2>Đăng Ký</h2>
-                        <p style="color: var(--text-secondary); font-size: 14px;">Tạo tài khoản để trải nghiệm trọn vẹn</p>
-                    </div>
-                    
-                    <form id="registerForm">
-                        <div class="form-group">
-                            <label>Tên hiển thị</label>
-                            <input type="text" placeholder="VD: Làng Phim User">
-                        </div>
-                        <div class="form-group">
-                            <label>Địa chỉ Email</label>
-                            <input type="email" placeholder="VD: member@moviebasket.com">
-                        </div>
-                        <div class="form-group">
-                            <label>Mật khẩu</label>
-                            <input type="password" placeholder="••••••••">
-                        </div>
-
-                        <button type="submit" class="btn-primary">Đăng Ký</button>
-                    </form>
-
-                    <div class="auth-footer">
-                        Đã có tài khoản? <span id="switchToLogin" style="cursor: pointer; color: var(--primary-color);">Đăng nhập</span>
-                    </div>
+    
                 </div> </div> </div> </div> ```

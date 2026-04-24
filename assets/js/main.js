@@ -218,48 +218,6 @@ window.addEventListener('scroll', () => {
 });
 
 // Modal Logic
-const loginBtn = document.getElementById('loginBtn');
-const authModal = document.getElementById('authModal');
-const closeModal = document.getElementById('closeModal');
-const loginForm = document.getElementById('loginForm');
-const userMenu = document.getElementById('userMenu');
-const logoutBtn = document.getElementById('logoutBtn');
 
-if (loginBtn && authModal) {
-    loginBtn.addEventListener('click', () => authModal.classList.add('active'));
-}
-
-if (closeModal) {
-    closeModal.addEventListener('click', () => authModal.classList.remove('active'));
-}
-
-// Chuyển đổi Đăng nhập / Đăng ký
-const authViewsContainer = document.getElementById('authViews');
-const switchToRegisterBtn = document.getElementById('switchToRegister');
-const switchToLoginBtn = document.getElementById('switchToLogin');
-
-if (switchToRegisterBtn && switchToLoginBtn && authViewsContainer) {
-    switchToRegisterBtn.addEventListener('click', () => authViewsContainer.classList.add('show-register'));
-    switchToLoginBtn.addEventListener('click', () => authViewsContainer.classList.remove('show-register'));
-}
 
 // Xử lý Login giả định
-if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const passInput = document.getElementById('passInput').value;
-        if (passInput === '123') {
-            authModal.classList.remove('active');
-            loginBtn.style.display = 'none';
-            userMenu.style.display = 'block';
-        }
-    });
-}
-
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        userMenu.style.display = 'none';
-        loginBtn.style.display = 'block';
-    });
-}

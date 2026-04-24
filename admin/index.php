@@ -1,13 +1,23 @@
 <?php 
 include_once __DIR__ . '/../core/config.php'; 
+require_once __DIR__ . '/../core/auth_admin.php';
 
-// Lấy số liệu thực tế từ các bảng
-$movie_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM movies"))['total'] ?? 0;
-$episode_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM episodes"))['total'] ?? 0;
-$user_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM users"))['total'] ?? 0;
-$view_res = mysqli_fetch_assoc(mysqli_query($conn, "SELECT SUM(views) as total FROM movies"));
-$view_count = $view_res['total'] ?? 0;
+try {
+    // 2. Lấy số liệu dùng PDO (thay cho mysqli cũ)
+    $movie_count = $pdo->query("SELECT COUNT(*) FROM movies")->fetchColumn() ?: 0;
+    $episode_count = $pdo->query("SELECT COUNT(*) FROM episodes")->fetchColumn() ?: 0;
+    $user_count = $pdo->query("SELECT COUNT(*) FROM users")->fetchColumn() ?: 0;
+    
+    // Tính tổng lượt xem (dùng dấu ? để tránh lỗi nếu chưa có phim nào)
+    $view_res = $pdo->query("SELECT SUM(views) FROM movies")->fetchColumn();
+    $view_count = $view_res ?: 0;
 
+} catch (PDOException $e) {
+    // Nếu có lỗi (ví dụ bảng movies chưa có cột views), gán bằng 0 để trang không bị sập
+    $movie_count = $episode_count = $user_count = $view_count = 0;
+    // Tạm thời comment dòng dưới nếu muốn soi lỗi thật:
+    // die("Lỗi DB: " . $e->getMessage()); 
+}
 include 'sidebar.php'; 
 ?>
 
