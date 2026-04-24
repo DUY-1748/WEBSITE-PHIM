@@ -44,31 +44,51 @@ const loadWatchPage = (listMovie) => {
 
    // --- TRƯỜNG HỢP 2: TRANG XEM PHIM (page=watching) ---
     if (page === 'watching') {
-        const container = document.getElementById('watching-page-container');
-        if (!container) return;
+    const container = document.getElementById('watching-page-container');
+    if (!container) return;
 
-        const movie = listMovie.find(m => String(m.tmdb_id) === String(movieId) || String(m.id) === String(movieId));
-        
-        if (movie) {
-            const movieData = {
-                ...movie,
-                poster: movie.poster_path?.startsWith('http') ? movie.poster_path : `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
-                backdrop: movie.backdrop_path?.startsWith('http') ? movie.backdrop_path : `https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
-                rating: movie.rating || 0
-            };
+    const movie = listMovie.find(m => String(m.tmdb_id) === String(movieId) || String(m.id) === String(movieId));
+    
+    if (movie) {
+        // 1. Chuẩn hóa dữ liệu ảnh
+        const movieData = {
+            ...movie,
+            poster: movie.poster_path?.startsWith('http') ? movie.poster_path : `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
+            backdrop: movie.backdrop_path?.startsWith('http') ? movie.backdrop_path : `https://image.tmdb.org/t/p/original${movie.backdrop_path}`,
+            rating: movie.rating || 0
+        };
 
-            const related = listMovie.filter(m => String(m.tmdb_id) !== String(movieId));
-            container.innerHTML = '';
+        const related = listMovie.filter(m => String(m.tmdb_id) !== String(movieId));
+        container.innerHTML = '';
+        container.appendChild(renderWatchingPage(movieData, related));
+
+        // 2. LOGIC TÁCH BIỆT: Nếu chưa có video_key, đi lấy ngay lập tức
+        if (!movieData.video_key || movieData.video_key === "NULL") {
+            console.log("🎬 Đang đi lấy trailer cho phim này...");
             
-            // Truyền movieData đã được chuẩn hóa ảnh
-            container.appendChild(renderWatchingPage(movieData, related));
-            
-            window.scrollTo(0, 0);
-            console.log("Đã render trang xem phim cho ID:", movieId);
-        } else {
-            container.innerHTML = `<h2 style="color:white; text-align:center; padding:100px;">Không tìm thấy dữ liệu video.</h2>`;
+            fetch(`api/get_trailer.php?tmdb_id=${movieData.tmdb_id}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.video_key) {
+                        // Tìm cái Iframe trong trang và nạp src cho nó
+                        const iframe = document.querySelector('#movie-iframe'); // ID này tùy bạn đặt trong renderWatchingPage
+                        if (iframe) {
+                            iframe.src = `https://www.youtube.com/embed/${data.video_key}?autoplay=1`;
+                        }
+                        // Cập nhật lại vào biến movieData để nếu user chuyển tab không bị load lại
+                        movieData.video_key = data.video_key;
+                    } else {
+                        console.error("Không tìm thấy mã video từ TMDB.");
+                    }
+                })
+                .catch(err => console.error("Lỗi lấy trailer:", err));
         }
+
+        window.scrollTo(0, 0);
+    } else {
+        container.innerHTML = `<h2 style="color:white; text-align:center; padding:100px;">Không tìm thấy dữ liệu video.</h2>`;
     }
+}
 };
 
 /**
@@ -198,48 +218,6 @@ window.addEventListener('scroll', () => {
 });
 
 // Modal Logic
-const loginBtn = document.getElementById('loginBtn');
-const authModal = document.getElementById('authModal');
-const closeModal = document.getElementById('closeModal');
-const loginForm = document.getElementById('loginForm');
-const userMenu = document.getElementById('userMenu');
-const logoutBtn = document.getElementById('logoutBtn');
 
-if (loginBtn && authModal) {
-    loginBtn.addEventListener('click', () => authModal.classList.add('active'));
-}
-
-if (closeModal) {
-    closeModal.addEventListener('click', () => authModal.classList.remove('active'));
-}
-
-// Chuyển đổi Đăng nhập / Đăng ký
-const authViewsContainer = document.getElementById('authViews');
-const switchToRegisterBtn = document.getElementById('switchToRegister');
-const switchToLoginBtn = document.getElementById('switchToLogin');
-
-if (switchToRegisterBtn && switchToLoginBtn && authViewsContainer) {
-    switchToRegisterBtn.addEventListener('click', () => authViewsContainer.classList.add('show-register'));
-    switchToLoginBtn.addEventListener('click', () => authViewsContainer.classList.remove('show-register'));
-}
 
 // Xử lý Login giả định
-if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const passInput = document.getElementById('passInput').value;
-        if (passInput === '123') {
-            authModal.classList.remove('active');
-            loginBtn.style.display = 'none';
-            userMenu.style.display = 'block';
-        }
-    });
-}
-
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        userMenu.style.display = 'none';
-        loginBtn.style.display = 'block';
-    });
-}

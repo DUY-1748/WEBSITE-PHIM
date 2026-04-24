@@ -1,6 +1,6 @@
 export const renderWatchingPage = (movie, relatedMovies = []) => {
     const container = document.createElement('div');
-    container.style.cssText = `background-color: #0b0c10; color: white; padding: 20px 0; min-height: 100vh; font-family: 'Inter', sans-serif;`;
+    container.style.cssText = `background-color: #0b0c10; color: white; padding: 20px 0; min-height: 100vh; font-family: 'Inter', sans-serif; padding-top:60px;`;
 
     // --- XỬ LÝ LOGIC VIDEO ---
     const videoId = movie.video_key; // Lấy từ Database
@@ -14,7 +14,7 @@ export const renderWatchingPage = (movie, relatedMovies = []) => {
             <iframe 
                 id="main-video"
                 src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1" 
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" 
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; margin-top:60px;" 
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                 allowfullscreen>
             </iframe>`;

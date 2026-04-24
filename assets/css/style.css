@@ -142,7 +142,7 @@ header {
     padding-left: 15px;
 }
 
-/* Right Header Actions */
+/* Right Header Actions */  
 .nav-actions {
     display: flex;
     align-items: center;
@@ -475,203 +475,178 @@ header {
 
 
 /* ---------------- AUTH MODAL ---------------- */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
+:root {
+    --primary: #f5c518; /* Màu vàng thương hiệu Làng Phim */
+    --glass: rgba(255, 255, 255, 0.05);
+}
+.auth-container {
+    min-height: 80vh; /* Để cân bằng giữa header và footer */
+    margin-top: 50px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    z-index: 2000;
-    opacity: 0;
-    pointer-events: none;
-    transition: var(--transition);
+    align-items: center;
+    padding: 20px;
+    background: radial-gradient(circle at top right, #2c2c2c, #000);
 }
 
-.modal-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.auth-modal {
+.auth-box {
     width: 100%;
     max-width: 400px;
+    background: var(--glass);
+    backdrop-filter: blur(15px); /* Hiệu ứng kính mờ */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
     padding: 40px;
-    border-radius: 16px;
-    transform: translateY(-20px);
-    transition: var(--transition);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
 }
 
-.modal-overlay.active .auth-modal {
-    transform: translateY(0);
+.auth-header h1 {
+    color: #fff;
+    font-size: 28px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
-.close-modal {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    cursor: pointer;
-    font-size: 24px;
-    color: var(--text-secondary);
-}
-
-.close-modal:hover {
-    color: var(--text-primary);
-}
-
-.auth-header {
+.auth-header p {
+    color: #aaa;
+    font-size: 14px;
     text-align: center;
     margin-bottom: 30px;
 }
 
-.auth-header h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
-
-.form-group {
+.input-group {
+    position: relative;
     margin-bottom: 20px;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-size: 14px;
-    color: var(--text-secondary);
+.input-group i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
 }
 
-.form-group input {
+.input-group input {
     width: 100%;
-    padding: 12px 15px;
+    padding: 12px 15px 12px 45px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--glass-border);
-    border-radius: 8px;
-    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: #fff;
     outline: none;
-    transition: var(--transition);
+    transition: 0.3s;
 }
 
-.form-group input:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
+.input-group input:focus {
+    border-color: var(--primary);
     background: rgba(255, 255, 255, 0.1);
 }
 
-.error-msg {
-    color: #ff4e50;
-    font-size: 12px;
-    margin-top: 5px;
-    display: none;
+.auth-options {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #aaa;
+    margin-bottom: 25px;
 }
 
-.input-error input {
-    border-color: #ff4e50;
-    box-shadow: 0 0 8px rgba(255, 78, 80, 0.2);
+.btn-login-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    border: none;
+    border-radius: 12px;
+    color: #000;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
-.input-error .error-msg {
-    display: block;
+.btn-login-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(245, 197, 24, 0.3);
 }
 
 .auth-divider {
     text-align: center;
-    margin: 20px 0;
+    margin: 25px 0;
     position: relative;
 }
 
 .auth-divider::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 50%;
     left: 0;
-    width: 45%;
+    width: 100%;
     height: 1px;
-    background: var(--glass-border);
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 0;
 }
 
-.auth-divider::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: 0;
-    width: 45%;
-    height: 1px;
-    background: var(--glass-border);
+.auth-divider span {
+    background: #151515; /* Trùng màu nền để che đường kẻ */
+    padding: 0 15px;
+    color: #666;
+    font-size: 12px;
+    position: relative;
+    z-index: 1;
 }
 
-.btn-social {
+.btn-google {
+    width: 100%;
+    padding: 10px;
+    background: #fff;
+    border: none;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    width: 100%;
-    padding: 10px;
-    background: white;
-    color: #333;
-    border: none;
-    border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
-    margin-bottom: 10px;
 }
 
 .auth-footer {
-    text-align: center;
     margin-top: 30px;
+    text-align: center;
+    color: #888;
     font-size: 14px;
-    color: var(--text-secondary);
 }
 
-.auth-footer span {
-    color: var(--gold);
-    font-weight: 600;
+.auth-footer a {
+    color: var(--primary);
+    text-decoration: none;
+}
+/* Bạn có thể dán chung vào file CSS hiện tại */
+
+.auth-container {
+    /* Đảm bảo trang đăng ký có đủ không gian vì nhiều ô input hơn */
+    margin-top: 50px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.auth-box {
+    /* Trang đăng ký nhiều trường hơn nên có thể cho rộng hơn 1 chút nếu muốn */
+    max-width: 450px; 
+}
+
+/* Hiệu ứng focus cho checkbox */
+input[type="checkbox"] {
+    accent-color: var(--primary);
     cursor: pointer;
 }
 
-/* AUTH SLIDING CONTAINER */
-.auth-views-container {
-    position: relative;
-    overflow: hidden;
-    height: auto;
-    transition: height 0.3s ease;
+/* Responsive cho điện thoại */
+@media (max-width: 480px) {
+    .auth-box {
+        padding: 25px 20px;
+        margin-top: 10px;
+        border-radius: 0; /* Full màn hình trên mobile cho hiện đại */
+    }
 }
-
-.auth-view {
-    width: 100%;
-    max-width: 400px;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-}
-
-.auth-view.login-view {
-    transform: translateX(0);
-    opacity: 1;
-}
-
-.auth-view.register-view {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translateX(100%);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.auth-views-container.show-register .login-view {
-    transform: translateX(-100%);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.auth-views-container.show-register .register-view {
-    transform: translateX(0);
-    opacity: 1;
-    pointer-events: auto;
-    position: relative;
-}
-
 /* ---------------- FOOTER ---------------- */
 .site-footer {
     background-color: #000000;

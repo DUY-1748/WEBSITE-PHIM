@@ -1,24 +1,34 @@
+
 <?php
 include_once __DIR__ . '/../core/config.php';
 
-// 1. Xử lý Khóa/Mở khóa
-if (isset($_GET['toggle_status']) && isset($_GET['current'])) {
-    $id = intval($_GET['toggle_status']);
-    $new_status = ($_GET['current'] == 1) ? 0 : 1; // Đảo ngược trạng thái
-    
-    $sql = "UPDATE users SET status = $new_status WHERE id = $id";
-    mysqli_query($conn, $sql);
-    header("Location: manage-users.php");
-}
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-// 2. Xử lý Xóa tài khoản
+    // Xử lý đổi Role (Thường/VIP/Admin)
+    if (isset($_GET['new_role'])) {
+        $new_role = $_GET['new_role'];
+        $stmt = $pdo->prepare("UPDATE users SET role = ? WHERE user_id = ?");
+        $stmt->execute([$new_role, $id]);
+    }
+
+    // Xử lý Khóa/Mở khóa
+    if (isset($_GET['toggle_status'])) {
+        $current_status = $_GET['toggle_status'];
+        $new_status = ($current_status == 1) ? 0 : 1;
+        $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE user_id = ?");
+        $stmt->execute([$new_status, $id]);
+    }
+
+    header("Location: manage-users.php");
+    exit();
+}
+// Xử lý xóa user
 if (isset($_GET['delete'])) {
-    $id = intval($_GET['delete']);
-    
-    // Lưu ý: Không cho phép admin tự xóa chính mình nếu cần thiết
-    $sql = "DELETE FROM users WHERE id = $id";
-    mysqli_query($conn, $sql);
+    $id = $_GET['delete'];
+    $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+    $stmt->execute([$id]);
     header("Location: manage-users.php");
+    exit();
 }
-
 ?>

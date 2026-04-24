@@ -14,6 +14,12 @@ switch ($page) {
     case 'home':
         include 'views/home.php'; 
         break;
+    case 'login':
+        include 'views/login.php'; 
+        break;
+    case 'register':
+        include 'views/register.php'; 
+        break;
     case 'loc-phim':
         include 'views/category.php'; 
         break;
@@ -29,6 +35,7 @@ switch ($page) {
         include 'views/home.php';
         break;
 }
+
 
 // 4. Nhúng FOOTER
 include 'includes/footer.php';

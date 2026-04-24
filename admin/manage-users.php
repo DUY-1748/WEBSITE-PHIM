@@ -5,54 +5,46 @@ include 'sidebar.php';
 
 <div class="main-content">
     <div class="card">
-        <h3><i class="fas fa-user-shield"></i> Danh sách Thành viên</h3>
+        <h3><i class="fas fa-users"></i> Quản lý người dùng</h3>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>Tên tài khoản</th>
-                    <th>Quyền</th>
+                    <th>Cấp bậc</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                // Lấy danh sách user từ database
-                $result = mysqli_query($conn, "SELECT * FROM users ORDER BY id DESC");
-                
-                if (mysqli_num_rows($result) > 0) {
-                    while($row = mysqli_fetch_assoc($result)): 
-                        $status_text = ($row['status'] == 1) ? "Hoạt động" : "Bị khóa";
-                        $status_color = ($row['status'] == 1) ? "#2ecc71" : "#e74c3c";
-                        $action_text = ($row['status'] == 1) ? "Khóa" : "Mở khóa";
-                        $action_btn_color = ($row['status'] == 1) ? "#e67e22" : "#2ecc71";
+                $result = $pdo->query("SELECT * FROM users ORDER BY user_id DESC");
+                while($row = $result->fetch(PDO::FETCH_ASSOC)): 
+                    $u_id = $row['user_id'];
+                    $u_status = $row['status'] ?? 1;
+                    $u_role = $row['role'];
                 ?>
                 <tr>
-                    <td><?= $row['id'] ?></td>
-                    <td><strong><?= htmlspecialchars($row['username']) ?></strong></td>
-                    <td><span class="badge"><?= $row['role'] ?></span></td>
-                    <td><span style="color: <?= $status_color ?>; font-weight: bold;"><?= $status_text ?></span></td>
+                    <td><?= $u_id ?></td>
+                    <td><?= htmlspecialchars($row['username']) ?></td>
                     <td>
-                        <a href="process-user.php?toggle_status=<?= $row['id'] ?>&current=<?= $row['status'] ?>" 
-                           class="btn-submit" 
-                           style="padding: 5px 10px; background: <?= $action_btn_color ?>; font-size: 12px; text-decoration: none; border-radius: 3px;">
-                           <?= $action_text ?>
-                        </a>
-
-                        <a href="process-user.php?delete=<?= $row['id'] ?>" 
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa vĩnh viễn tài khoản này?')"
-                           style="padding: 5px 10px; background: #e74c3c; font-size: 12px; color: white; text-decoration: none; border-radius: 3px; margin-left: 5px;">
-                           Xóa
+                        <select onchange="location.href='process-user.php?id=<?= $u_id ?>&new_role=' + this.value">
+                            <option value="0" <?= $u_role == 0 ? 'selected' : '' ?>>Thường</option>
+                            <option value="2" <?= $u_role == 2 ? 'selected' : '' ?>>VIP</option>
+                            <option value="1" <?= $u_role == 1 ? 'selected' : '' ?>>Admin</option>
+                        </select>
+                    </td>
+                    <td>
+                        <?= ($u_status == 1) ? '<span style="color: #2ecc71;">Hoạt động</span>' : '<span style="color: #e74c3c;">Bị khóa</span>' ?>
+                    </td>
+                    <td>
+                        <a href="process-user.php?id=<?= $u_id ?>&toggle_status=<?= $u_status ?>" 
+                           style="padding: 8px 10px; background: <?= ($u_status == 1 ? '#e67e22' : '#2ecc71') ?>; color:white; border-radius:3px; text-decoration:none; font-size:12px;">
+                           <?= ($u_status == 1 ? 'Khóa tài khoản' : 'Mở khóa') ?>
                         </a>
                     </td>
                 </tr>
-                <?php 
-                    endwhile; 
-                } else {
-                    echo "<tr><td colspan='5' style='text-align:center;'>Chưa có thành viên nào.</td></tr>";
-                }
-                ?>
+                <?php endwhile; ?>
             </tbody>
         </table>
     </div>
