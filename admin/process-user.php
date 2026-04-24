@@ -1,24 +1,23 @@
 <?php
 include_once __DIR__ . '/../core/config.php';
 
-// 1. Xử lý Khóa/Mở khóa
-if (isset($_GET['toggle_status']) && isset($_GET['current'])) {
-    $id = intval($_GET['toggle_status']);
-    $new_status = ($_GET['current'] == 1) ? 0 : 1; // Đảo ngược trạng thái
+// Xử lý thay đổi trạng thái
+if (isset($_GET['toggle'])) {
+    $id = $_GET['toggle'];
+    $new_status = ($_GET['status'] == 1) ? 0 : 1;
     
-    $sql = "UPDATE users SET status = $new_status WHERE id = $id";
-    mysqli_query($conn, $sql);
+    $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE id = ?");
+    $stmt->execute([$new_status, $id]);
     header("Location: manage-users.php");
+    exit();
 }
 
-// 2. Xử lý Xóa tài khoản
+// Xử lý xóa user
 if (isset($_GET['delete'])) {
-    $id = intval($_GET['delete']);
-    
-    // Lưu ý: Không cho phép admin tự xóa chính mình nếu cần thiết
-    $sql = "DELETE FROM users WHERE id = $id";
-    mysqli_query($conn, $sql);
+    $id = $_GET['delete'];
+    $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+    $stmt->execute([$id]);
     header("Location: manage-users.php");
+    exit();
 }
-
 ?>

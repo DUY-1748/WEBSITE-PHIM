@@ -2,7 +2,7 @@
 :root {
     --bg-dark: #0a0a0a;
     --bg-card: #161616;
-    --primary: #ffc107; /* Vàng Rophim */
+    --primary: #ffc107; 
     --text: #ffffff;
     --text-muted: #a0a0a0;
     --border: #282828;
@@ -114,4 +114,47 @@ input:focus { border-color: var(--primary); outline: none; }
     font-size: 12px;
     background: #333;
     color: var(--primary);
+}
+/* Import font hiện đại */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap');
+
+:root {
+    --primary: #f1c40f; /* Vàng đặc trưng Làng Phim */
+    --bg-dark: #121212;
+    --card-bg: #1e1e1e;
+    --text-main: #ffffff;
+    --text-muted: #b3b3b3;
+}
+
+body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+}
+
+/* Style cho các nhãn (Label) */
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary);
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+/* Input field hiện đại hơn */
+.input-field {
+    background: #2a2a2a;
+    border: 1px solid #333;
+    border-radius: 8px;
+    color: white;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(241, 196, 15, 0.2);
+    outline: none;
 }
