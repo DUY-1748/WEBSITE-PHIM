@@ -24,7 +24,7 @@ if (!empty($allTmdbMovies)) {
     foreach ($allTmdbMovies as $movie) {
         
 
-        $videoKey = getMovieVideos($movie['id']);
+        
 
         // 2. Kiểm tra trùng lặp
         $stmt = $pdo->prepare("SELECT id FROM movies WHERE tmdb_id = ?");
@@ -32,8 +32,8 @@ if (!empty($allTmdbMovies)) {
         
         if (!$stmt->fetch()) {
             // 3. INSERT (ĐÃ SỬA: backdrop_path -> backdrop)
-            $sql = "INSERT INTO movies (tmdb_id, title, overview, poster_path, backdrop_path, release_date, rating, video_key) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO movies (tmdb_id, title, overview, poster_path, backdrop_path, release_date, rating) 
+                    VALUES (?, ?, ?, ?, ?, ?, ?)";
             $insertStmt = $pdo->prepare($sql);
             
             try {
@@ -45,7 +45,7 @@ if (!empty($allTmdbMovies)) {
                     $movie['backdrop_path'], // Dữ liệu từ TMDB
                     $movie['release_date'] ?: '2024-01-01',
                     $movie['vote_average'],
-                    $videoKey
+                    
                 ]);
             } catch (PDOException $e) {
                 // Nếu lỗi, log ra để debug nhưng không làm chết app
