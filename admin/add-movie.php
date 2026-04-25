@@ -1,6 +1,6 @@
 <?php 
 include_once __DIR__ . '/../core/config.php';
-include 'sidebar.php'; 
+include '/../includes/sidebar.php'; 
 ?>
 
 <style>
