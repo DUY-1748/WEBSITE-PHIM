@@ -1,14 +1,12 @@
-/*js*/
 import { createMovieCard } from './components/movie_card.js';
 import { MovieCardTop10 } from './components/rankingMovie.js';
 import { renderMovieDetail } from './components/movieDetail.js';
 import { renderWatchingPage } from './components/watchingMovie.js';
+import { renderSearchSuggestions } from './components/suggestionMovie.js';
 
 /**
  * HÀM XỬ LÝ ĐỊNH TUYẾN TRANG (WATCH & WATCHING)
  */
-import { renderSearchSuggestions } from './components/suggestionMovie.js';
-
 const loadWatchPage = (listMovie) => {
     const urlParams = new URLSearchParams(window.location.search);
     const page = urlParams.get('page');
@@ -21,7 +19,6 @@ const loadWatchPage = (listMovie) => {
         const container = document.querySelector('.detail');
         if (!container) return;
 
-        // Tìm phim: Ưu tiên tìm theo tmdb_id vì URL của bạn dùng ID TMDB (1084187)
         const movie = listMovie.find(m => String(m.tmdb_id) === String(movieId) || String(m.id) === String(movieId));
         
         if (movie) {
@@ -59,12 +56,8 @@ const loadWatchPage = (listMovie) => {
 
             const related = listMovie.filter(m => String(m.tmdb_id) !== String(movieId));
             container.innerHTML = '';
-            
-            // Truyền movieData đã được chuẩn hóa ảnh
             container.appendChild(renderWatchingPage(movieData, related));
-            
             window.scrollTo(0, 0);
-            console.log("Đã render trang xem phim cho ID:", movieId);
         } else {
             container.innerHTML = `<h2 style="color:white; text-align:center; padding:100px;">Không tìm thấy dữ liệu video.</h2>`;
         }
@@ -80,11 +73,8 @@ fetch(apiMovie)
     .then(res => res.json())
     .then(data => {
         const listMovie = data;
-        
-        // Gọi hàm xử lý định tuyến trang watch/watching
         loadWatchPage(listMovie);
         
-        // Chuẩn hóa dữ liệu cho các Movie Card ở trang chủ
         const movieArray = listMovie.map(item => ({
             title: item.title,
             date: item.release_date,
@@ -92,19 +82,18 @@ fetch(apiMovie)
             rating: item.rating,
             overview: item.overview,
             background: item.backdrop_path ? `https://image.tmdb.org/t/p/w500${item.backdrop_path}` : '',
-            tmdb_id: item.tmdb_id || item.id, // Đảm bảo lấy đúng ID để gán vào link
+            tmdb_id: item.tmdb_id || item.id,
             id: item.tmdb_id || item.id 
         }));
 
-        // Render Movie Grid 3 (Top phim mới)
+        // Render Movie Grid 3 (Phim mới)
         const movieGrid3 = document.querySelector('.movie-grid-3');
         if (movieGrid3) {
-            for (let i = Math.min(9, movieArray.length); i >= 0  ; i--) {
+            for (let i = Math.min(9, movieArray.length - 1); i >= 0; i--) {
                 movieGrid3.appendChild(createMovieCard(movieArray[i]));
             }
         }
 
-        // Render các Grid khác và trang All Movie
         const movieGrid1 = document.querySelector('.movie-grid');
         const movieGrid2 = document.querySelector('.movie-grid-2');
         const allMoviePage = document.querySelector('.allmovie');
@@ -117,10 +106,9 @@ fetch(apiMovie)
             if (parseInt(releaseYear) === 2026 && movieGrid2 ) {
                 movieGrid2.appendChild(createMovieCard(movieData));
             }
-            
         });
 
-        // Top Phim Hôm Nay (Dựa trên rating)
+        // Top Phim Rating
         const movieGrid4 = document.querySelector('.movie-grid-4'); 
         if (movieGrid4) {
             const top10Data = [...listMovie]
@@ -133,63 +121,36 @@ fetch(apiMovie)
                     poster: `https://image.tmdb.org/t/p/w500${item.poster_path}`,
                     rating: item.rating,
                     overview: item.overview,
-                    background: `https://image.tmdb.org/t/p/w500${item.background_path}`,
+                    background: `https://image.tmdb.org/t/p/w500${item.backdrop_path}`,
                     tmdb_id: item.id
                 };
-                loadWatchPage(top10Data)
                 const movieElement = MovieCardTop10(top10CardData, index);
                 movieGrid4.appendChild(movieElement);
             });
         }
-       
 
-
-        // xử lý search before enter event 
-
+        // Xử lý Search Live
         const dataInput = document.querySelector('#search_input');
         const searchSuggestion = document.querySelector('#search-suggestions');
 
-        dataInput.addEventListener('input',(event) => {
-            const keyWork = event.target.value.toLowerCase().trim();
-            if (keyWork === "") {
-                searchSuggestion.style.display = 'none';
-                searchSuggestion.innerHTML = ''; // Xóa sạch nội dung bên trong
-                return; 
-            }
-            if (!listMovie || listMovie.length === 0) {
-                console.error("Dữ liệu listMovie đang rỗng, không thể search live!");
-                return;
-            }
-            const Suggestion = listMovie.filter(item => {
-                return item.title.toLowerCase().includes(keyWork);
-               
+        if (dataInput) {
+            dataInput.addEventListener('input', (event) => {
+                const keyWork = event.target.value.toLowerCase().trim();
+                if (keyWork === "") {
+                    searchSuggestion.style.display = 'none';
+                    searchSuggestion.innerHTML = ''; 
+                    return; 
+                }
+                const Suggestion = listMovie.filter(item => item.title.toLowerCase().includes(keyWork));
+                searchSuggestion.style.display = 'block';
+                renderSearchSuggestions(Suggestion);
             });
-
-        console.log("Kết quả tìm được:", Suggestion);
-        renderSearchSuggestions(Suggestion);
-        });
-        
-
-       
-                
-        
-    })
-    
-
-
-
-
-
-
-
-
-
-
+        }
+    });
 
 /**
- * CÁC HIỆU ỨNG GIAO DIỆN (HEADER, MODAL)
+ * HIỆU ỨNG GIAO DIỆN
  */
-// Header Scroll Effect
 window.addEventListener('scroll', () => {
     const header = document.getElementById('mainHeader');
     if (header) {
@@ -197,49 +158,12 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Modal Logic
-const loginBtn = document.getElementById('loginBtn');
-const authModal = document.getElementById('authModal');
-const closeModal = document.getElementById('closeModal');
-const loginForm = document.getElementById('loginForm');
-const userMenu = document.getElementById('userMenu');
+// Xử lý Logout (Nếu có nút logout ngoài màn hình)
 const logoutBtn = document.getElementById('logoutBtn');
-
-if (loginBtn && authModal) {
-    loginBtn.addEventListener('click', () => authModal.classList.add('active'));
-}
-
-if (closeModal) {
-    closeModal.addEventListener('click', () => authModal.classList.remove('active'));
-}
-
-// Chuyển đổi Đăng nhập / Đăng ký
-const authViewsContainer = document.getElementById('authViews');
-const switchToRegisterBtn = document.getElementById('switchToRegister');
-const switchToLoginBtn = document.getElementById('switchToLogin');
-
-if (switchToRegisterBtn && switchToLoginBtn && authViewsContainer) {
-    switchToRegisterBtn.addEventListener('click', () => authViewsContainer.classList.add('show-register'));
-    switchToLoginBtn.addEventListener('click', () => authViewsContainer.classList.remove('show-register'));
-}
-
-// Xử lý Login giả định
-if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const passInput = document.getElementById('passInput').value;
-        if (passInput === '123') {
-            authModal.classList.remove('active');
-            loginBtn.style.display = 'none';
-            userMenu.style.display = 'block';
-        }
-    });
-}
-
 if (logoutBtn) {
     logoutBtn.addEventListener('click', (e) => {
         e.preventDefault();
-        userMenu.style.display = 'none';
-        loginBtn.style.display = 'block';
+        // Sau này sẽ gọi API PHP để hủy Session
+        window.location.href = 'api/logout.php'; 
     });
 }

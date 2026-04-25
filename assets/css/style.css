@@ -93,15 +93,14 @@ header {
 }
 
 
-
+/* ---------------- MEGA MENU (THE LOAI) ---------------- */
 .mega-menu {
     position: absolute;
     background-color: var(--card-bg);
     border: 1px solid var(--glass-border);
-    top: 100%;
+    top: 100%; /* Sát mép dưới của chữ Thể loại */
     left: -50px;
     width: 600px;
-    /* Thích ứng rộng hơn cho nhiều danh mục */
     max-height: 400px;
     overflow-y: auto;
     display: none;
@@ -111,12 +110,21 @@ header {
     gap: 15px;
     padding: 20px;
     border-radius: 12px;
-    margin-top: 15px;
-    pointer-events: none;
     z-index: 999;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    margin-top: 0; 
+    background-clip: padding-box; 
 }
 
+/* Khi hover vào cha, hiện menu con */
+.mega-menu-trigger:hover .mega-menu {
+    display: grid;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
 .mega-menu::-webkit-scrollbar {
     width: 6px;
 }
@@ -203,12 +211,20 @@ header {
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
 
-/* User Avatar Dropdown */
+/* ---------------- USER AVATAR & DROPDOWN ---------------- */
 .user-menu {
     position: relative;
-    display: none;
-    /* Shown via JS when logged in */
+    display: flex; /* Đổi từ none sang flex để căn chỉnh */
+    align-items: center;
+    gap: 12px;
     cursor: pointer;
+    z-index: 1001;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .avatar {
@@ -217,34 +233,77 @@ header {
     border-radius: 50%;
     border: 2px solid var(--gold);
     object-fit: cover;
+    transition: var(--transition);
+}
+
+.user-menu:hover .avatar {
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
 }
 
 .user-dropdown {
     position: absolute;
-    top: 50px;
+    top: 100%; /* Bám sát đáy của header */
     right: 0;
-    min-width: 200px;
+    min-width: 220px;
+    background: rgba(18, 18, 18, 0.98);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--glass-border);
     border-radius: 12px;
     padding: 10px 0;
     display: none;
+    z-index: 1000;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
+    
+    /* VÙNG ĐỆM QUAN TRỌNG: Giúp giữ menu không bị mất khi di chuột qua khoảng hở */
+    margin-top: 0; 
+    padding-top: 20px; 
+    background-clip: padding-box; 
+    border-top: 10px solid transparent; 
 }
 
 .user-menu:hover .user-dropdown {
     display: block;
+    animation: fadeInSlide 0.3s ease;
 }
 
 .user-dropdown a {
-    display: block;
-    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
     color: var(--text-secondary);
+    font-size: 14px;
+    transition: var(--transition);
+    text-decoration: none;
+}
+
+.user-dropdown a i {
+    font-size: 18px;
 }
 
 .user-dropdown a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
+    background: rgba(255, 215, 0, 0.1);
+    color: var(--gold);
+    padding-left: 25px;
 }
 
+.user-dropdown hr {
+    border: none;
+    border-top: 1px solid var(--glass-border);
+    margin: 8px 0;
+}
 
+/* Hiệu ứng mượt mà khi hiện menu */
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 /* ---------------- HERO SECTION ---------------- */
 .hero {
     position: relative;

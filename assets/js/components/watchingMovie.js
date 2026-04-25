@@ -2,8 +2,14 @@ export const renderWatchingPage = (movie, relatedMovies = []) => {
     const container = document.createElement('div');
     container.style.cssText = `background-color: #0b0c10; color: white; padding: 20px 0; min-height: 100vh; font-family: 'Inter', sans-serif;`;
 
+    // --- KIỂM TRA TRẠNG THÁI ĐĂNG NHẬP ---
+    // Kiểm tra xem có thông tin user trong sessionStorage không (giả định bạn lưu khi đăng nhập thành công)
+    // Nếu bạn dùng cách khác, hãy thay đổi logic kiểm tra này
+    const currentUser = JSON.parse(sessionStorage.getItem('user')) || null;
+    const isLoggedIn = currentUser !== null;
+
     // --- XỬ LÝ LOGIC VIDEO ---
-    const videoId = movie.video_key; // Lấy từ Database
+    const videoId = movie.video_key; 
     const backdropUrl = movie.backdrop_path?.startsWith('http') 
         ? movie.backdrop_path 
         : `https://image.tmdb.org/t/p/original${movie.backdrop_path}`;
@@ -29,6 +35,41 @@ export const renderWatchingPage = (movie, relatedMovies = []) => {
                     <p style="color: #aaa; font-size: 14px; margin-top: 10px;">Chúng mình đang nỗ lực tìm kiếm video tốt nhất cho bộ phim này.</p>
                 </div>
             </div>`;
+    }
+
+    // --- XỬ LÝ GIAO DIỆN BÌNH LUẬN DỰA TRÊN ĐĂNG NHẬP ---
+    let commentSectionHtml = '';
+    if (isLoggedIn) {
+        commentSectionHtml = `
+            <div style="background: #1a1d23; padding: 25px; border-radius: 8px;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(currentUser.username)}&background=random" 
+                         style="width: 45px; height: 45px; border-radius: 50%; border: 2px solid #ffc107;">
+                    <div>
+                        <p style="font-weight: bold; font-size: 15px; margin: 0;">${currentUser.username}</p>
+                        <p style="font-size: 12px; color: #aaa; margin: 0;">Đang trực tuyến</p>
+                    </div>
+                </div>
+                <textarea style="width: 100%; background: #2a2e35; border: 1px solid #333; border-radius: 8px; color: white; padding: 15px; min-height: 100px; outline: none; margin-bottom: 15px; resize: vertical;" 
+                          placeholder="Chia sẻ cảm nghĩ của bạn về phim..."></textarea>
+                <div style="display: flex; justify-content: flex-end;">
+                    <button class="btn-gold-submit" style="background: #ffc107; color: black; border: none; padding: 10px 25px; border-radius: 20px; font-weight: bold; cursor: pointer;">
+                        Gửi bình luận
+                    </button>
+                </div>
+            </div>
+        `;
+    } else {
+        commentSectionHtml = `
+            <div style="background: #1a1d23; padding: 40px; border-radius: 8px; text-align: center; border: 1px dashed #333;">
+                <p style="color: #aaa; margin-bottom: 20px;">Vui lòng đăng nhập để bình luận về bộ phim này.</p>
+                <button style="background: #ffc107; color: black; border: none; padding: 12px 30px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.3s;"
+                        onclick="window.location.href='index.php?page=login'">
+                    Đăng nhập ngay
+                </button>
+                <p style="color: #666; font-size: 13px; margin-top: 30px;">Chưa có bình luận nào. Hãy là người đầu tiên!</p>
+            </div>
+        `;
     }
 
     container.innerHTML = `
@@ -83,14 +124,7 @@ export const renderWatchingPage = (movie, relatedMovies = []) => {
 
             <div style="margin-top: 40px;">
                 <h3 style="font-size: 20px; margin-bottom: 20px; border-left: 4px solid #ffc107; padding-left: 15px;">Bình luận</h3>
-                <div style="background: #1a1d23; padding: 40px; border-radius: 8px; text-align: center; border: 1px dashed #333;">
-                    <p style="color: #aaa; margin-bottom: 20px;">Vui lòng đăng nhập để bình luận về bộ phim này.</p>
-                    <button style="background: #ffc107; color: black; border: none; padding: 12px 30px; border-radius: 25px; font-weight: bold; cursor: pointer; transition: 0.3s;"
-                            onclick="alert('Chức năng đăng nhập đang phát triển')">
-                        Đăng nhập ngay
-                    </button>
-                    <p style="color: #666; font-size: 13px; margin-top: 30px;">Chưa có bình luận nào. Hãy là người đầu tiên!</p>
-                </div>
+                ${commentSectionHtml}
             </div>
 
             <div style="margin-top: 40px; padding-bottom: 40px;">
@@ -130,8 +164,16 @@ export const renderWatchingPage = (movie, relatedMovies = []) => {
             .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 2px; bottom: 2px; background-color: white; transition: .4s; border-radius: 50%; }
             input:checked + .slider { background-color: #ffc107; }
             input:checked + .slider:before { transform: translateX(16px); }
+            .btn-gold-submit:hover { background: #ffea75 !important; transform: scale(1.05); }
         </style>
     `;
-
+// --- 4. GẮN SỰ KIỆN CLICK
+    const redirectBtn = container.querySelector('#auth-redirect-btn');
+    if (redirectBtn) {
+        redirectBtn.onclick = () => {
+            // Chuyển hướng đến index.php với tham số page=login
+            window.location.href = 'index.php?page=login';
+        };
+    }
     return container;
 };
