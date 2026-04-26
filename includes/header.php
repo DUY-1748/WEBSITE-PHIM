@@ -13,7 +13,7 @@
 <body>
 
     <header class="glass" id="mainHeader">
-        <div class="logo">Làng Phim.</div>
+        <a href= "index.php" class="logo">Làng Phim.</a>
 
        <ul class="nav-menu">
             <li><a href="index.php?page=home">Trang chủ</a></li>

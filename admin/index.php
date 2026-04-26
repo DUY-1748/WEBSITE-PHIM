@@ -18,8 +18,7 @@ try {
 } catch (PDOException $e) {
     $movie_count = $user_count = $total_revenue = $view_count = 0;
 }
-
-include 'sidebar.php'; 
+include_once __DIR__ . '/../includes/sidebar.php'; 
 ?>
 
 <div class="main-content">
