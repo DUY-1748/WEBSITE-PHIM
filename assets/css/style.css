@@ -202,49 +202,68 @@ header {
     background: var(--gold-hover);
     box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
 }
+/* ---------------- USER AVATAR & DROPDOWN ---------------- */
+    .user-menu {
+            position: relative;
+            padding: 5px 0; /* Tạo vùng đệm để không bị mất hover khi di chuyển chuột xuống */
+        }
 
-/* User Avatar Dropdown */
-.user-menu {
-    position: relative;
-    display: none;
-    /* Shown via JS when logged in */
-    cursor: pointer;
-}
+        .user-dropdown {
+            position: absolute;
+            top: 100%; 
+            right: 0;
+            width: 220px;
+            background: rgba(20, 20, 20, 0.95) !important;
+            backdrop-filter: blur(10px); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 10px;
+            display: none; 
+            z-index: 9999;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
 
-.avatar {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 2px solid var(--gold);
-    object-fit: cover;
-}
+        /* Hiển thị menu khi hover vào vùng bao quanh user-menu */
+        .user-menu:hover .user-dropdown {
+            display: block;
+            animation: fadeInMenu 0.2s ease-out;
+        }
 
-.user-dropdown {
-    position: absolute;
-    top: 50px;
-    right: 0;
-    min-width: 200px;
-    border-radius: 12px;
-    padding: 10px 0;
-    display: none;
-}
+        @keyframes fadeInMenu {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-.user-menu:hover .user-dropdown {
-    display: block;
-}
+        .user-dropdown a {
+            display: flex !important;
+            align-items: center;
+            gap: 10px;
+            padding: 12px !important;
+            color: #ccc !important;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+            border-radius: 8px;
+        }
 
-.user-dropdown a {
-    display: block;
-    padding: 10px 20px;
-    color: var(--text-secondary);
-}
+        .user-dropdown a:hover {
+            background: rgba(255, 193, 7, 0.1) !important;
+            color: #ffc107 !important;
+        }
 
-.user-dropdown a:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary);
-}
-
-
+        .avatar-circle {
+            background: #ffc107; 
+            color: black; 
+            font-weight: bold; 
+            width: 38px; 
+            height: 38px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer;
+            transition: 0.3s;
+        }
 /* ---------------- HERO SECTION ---------------- */
 .hero {
     position: relative;

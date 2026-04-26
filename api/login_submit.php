@@ -18,20 +18,30 @@ if (isset($_POST['login'])) {
         $user = $stmt->fetch();
 
         // Kiểm tra mật khẩu (Sử dụng password_verify vì mình đã hash lúc đăng ký)
-        if ($user && password_verify($password, $user['password'])) {
-            // Lưu thông tin vào Session
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role']; // Giá trị 0 hoặc 1 dựa trên bảng của bạn
+       // ... đoạn kiểm tra user và password_verify thành công ...
+if ($user && password_verify($password, $user['password'])) {
+    
+    // 1. Kiểm tra tài khoản bị khóa
+    if (isset($user['status']) && $user['status'] == 0) {
+        header("Location: ../index.php?page=login&error=account_locked");
+        exit();
+    }
 
-            // Nếu là Admin (giả sử role = 1), chuyển đến trang quản lý
-            if ($_SESSION['role'] == 1) {
-                header("Location: ../admin/index.php");
-            } else {
-                header("Location: ../index.php?page=home&success=login");
-            }
-            exit;
-        } else {
+    // 2. Lưu Session PHP (Bắt buộc)
+    $_SESSION['user_id'] = $user['user_id'];
+    $_SESSION['username'] = $user['username'];
+    $_SESSION['role'] = $user['role'];
+    $_SESSION['full_name'] = $user['full_name']; // Lưu thêm full_name để hiện icon HI
+
+    // 3. Chuyển hướng bằng PHP (Cách này ổn định nhất)
+    if ($_SESSION['role'] == 1) {
+        header("Location: ../admin/index.php");
+    } else {
+        // Thêm tham số login_status để JS nhận diện
+        header("Location: ../index.php?page=home&login_status=success");
+    }
+    exit;
+}  else {
             header("Location: ../index.php?page=login&error=wrong_credentials");
             exit;
         }
@@ -41,18 +51,5 @@ if (isset($_POST['login'])) {
         header("Location: ../index.php?page=login&error=system_error");
         exit;
     }
-}
-// Trong file api/login_submit.php
-if ($user && password_verify($password, $user['password'])) {
-    
-    // THÊM ĐOẠN NÀY: Kiểm tra nếu tài khoản bị khóa
-    if (isset($user['status']) && $user['status'] == 0) {
-        header("Location: ../index.php?page=login&error=account_locked");
-        exit();
-    }
-
-    // Nếu không bị khóa thì mới tạo Session
-    $_SESSION['user_id'] = $user['user_id'];
-    // ... các code lưu session khác ...
 }
 ?>
