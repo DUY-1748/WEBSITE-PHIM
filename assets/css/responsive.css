@@ -1,1 +1,112 @@
-/*Phim hay*/
+/* Tablet: <=1024px */
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 2.2rem;
+  }
+  .movie-grid {
+    gap: 20px;
+  }
+}
+
+/* Tablet nhỏ: <=768px */
+@media (max-width: 768px) {
+  /* Header */
+  header {
+    flex-direction: column;
+    text-align: center;
+    padding: 10px;
+  }
+  .nav-menu {
+    display: none; /* có thể thay bằng hamburger */
+  }
+  .search-box {
+    display: none;
+  }
+
+  /* Hero */
+  .hero {
+    height: 50vh;
+    min-height: 350px;
+    padding: 20px;
+  }
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  /* Movie grid */
+  .allmovie {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  /* Comments */
+  .comments {
+    padding: 10px;
+  }
+
+  /* Admin sidebar */
+  .sidebar {
+    width: 200px;
+  }
+  .main-content {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+  }
+}
+
+/* Mobile: <=480px */
+@media (max-width: 480px) {
+  /* Header */
+  .site-title {
+    font-size: 20px;
+  }
+
+  /* Episodes buttons */
+  .episodes {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .episodes button {
+    width: 100%;
+  }
+
+  /* Video */
+  video {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Movie grid */
+  .allmovie {
+    grid-template-columns: 1fr;
+  }
+
+  /* Comments form */
+  .comments form textarea {
+    width: 100%;
+    font-size: 14px;
+  }
+  .comments form button {
+    width: 100%;
+  }
+
+  /* Footer */
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  /* Admin sidebar */
+  .sidebar {
+    position: absolute;
+    left: -260px; /* ẩn ra ngoài */
+    transition: 0.3s;
+  }
+  .sidebar.active {
+    left: 0; /* hiện khi click nút menu */
+  }
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    padding: 15px;
+  }
+}
