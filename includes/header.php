@@ -51,7 +51,8 @@ if (session_status() === PHP_SESSION_NONE) {
                 <input type="hidden" name="page" value="search">
                 <div class="search-box">
                     <i class="ph ph-magnifying-glass" style="position: absolute; left: 10px; top: 10px; color: var(--text-secondary);"></i>
-                    <input type="text" id="search_input" name="search" placeholder="Tìm kiếm phim, diễn viên...">
+                    <input type="text" id="search_input" name="search" placeholder="Tìm kiếm phim, diễn viên..."
+                        value="<?= isset($_GET['query']) ? htmlspecialchars($_GET['query']) : '' ?>" required>
                 </div>
                 <div id="search-suggestions" class="suggestions-dropdown"></div>
             </form>

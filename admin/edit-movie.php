@@ -1,6 +1,6 @@
 <?php 
 include_once __DIR__ . '/../core/config.php';
-include 'sidebar.php'; 
+include_once __DIR__ . '/../includes/sidebar.php';
 
 if(isset($_GET['id'])) {
     $id = intval($_GET['id']);

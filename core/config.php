@@ -1,7 +1,7 @@
 <?php 
 // Đã thay đổi thành thông tin Database trên mạng (freesqldatabase)
 $host = 'localhost';      // Thay cho sql12.freesqldatabase.com
-$db   = 'sql6464118';    // Tên Database 
+$db   = 'lang_phim_db';    // Tên Database 
 $user = 'root';           // Mặc định của XAMPP luôn là root
 $pass = '';               // Mặc định của XAMPP là để trống (không có mật khẩu)
 $charset = 'utf8mb4';

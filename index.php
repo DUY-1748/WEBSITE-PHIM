@@ -51,4 +51,21 @@ switch ($page) {
 
 // 4. Nhúng FOOTER
 include 'includes/footer.php';
+
+$page = $_GET['page'] ?? 'home';
+
+include 'includes/header.php';
+
+switch ($page) {
+    case 'search':
+        include 'pages/search.php';
+        break;
+    case 'home':
+        include 'pages/home.php';
+        break;
+    // ... các case khác
+    default:
+        include 'pages/home.php';
+}
+
 ?>
