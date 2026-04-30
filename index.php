@@ -1,19 +1,23 @@
 <?php
-// Bắt đầu session ở đầu file index để mọi trang con đều dùng được
+/**
+ * FILE INDEX ĐÃ FIX LỖI ĐƯỜNG DẪN
+ */
+
+// 1. Bắt đầu session ở đầu file để đồng bộ đăng nhập
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Kết nối database (Đảm bảo đường dẫn này đúng với cấu trúc của bạn)
+// 2. Kết nối database
 require_once 'core/config.php';
 
-// 1. Lấy tham số 'page' trên thanh URL
+// 3. Lấy tham số 'page' trên thanh URL
 $page = isset($_GET['page']) ? $_GET['page'] : 'home';
 
-// 2. Nhúng HEADER
+// 4. Nhúng HEADER (Chứa logo, menu và icon người dùng)
 include 'includes/header.php';
 
-// 3. XỬ LÝ ĐỊNH TUYẾN (ROUTING)
+// 5. XỬ LÝ ĐỊNH TUYẾN (ROUTING) - Chỉ dùng thư mục views
 switch ($page) {
     case 'home':
         include 'views/home.php'; 
@@ -25,7 +29,7 @@ switch ($page) {
         include 'views/register.php'; 
         break;
     case 'profile':
-        include 'views/profile.php'; // Đã thêm đường dẫn này
+        include 'views/profile.php'; 
         break;
     case 'category':
     case 'loc-phim':
@@ -35,37 +39,24 @@ switch ($page) {
         include 'views/movie-detail.php';
         break;
     case 'watching':
-        include 'views/watch.php';
+        include 'views/watch.php'; // Trang xem phim chứa phần bình luận
         break; 
     case 'search':
         include 'views/search.php';
         break;
     case 'bookmarks':
-        // tạm thời dùng chung home hoặc profile
         include 'views/profile.php'; 
         break;
     default:
-        include 'views/home.php';
+        // Nếu không tìm thấy trang, mặc định về home
+        if (file_exists("views/$page.php")) {
+            include "views/$page.php";
+        } else {
+            include 'views/home.php';
+        }
         break;
 }
 
-// 4. Nhúng FOOTER
+// 6. Nhúng FOOTER
 include 'includes/footer.php';
-
-$page = $_GET['page'] ?? 'home';
-
-include 'includes/header.php';
-
-switch ($page) {
-    case 'search':
-        include 'pages/search.php';
-        break;
-    case 'home':
-        include 'pages/home.php';
-        break;
-    // ... các case khác
-    default:
-        include 'pages/home.php';
-}
-
 ?>

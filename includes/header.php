@@ -18,13 +18,13 @@ if (session_status() === PHP_SESSION_NONE) {
 <body>
 
     <header class="glass" id="mainHeader">
-        <a href="index.php" class="logo">Làng Phim.</a>
+        <a href="index.php" class="logo">LÀNG PHIM</a>
 
         <ul class="nav-menu">
-            <li><a href="index.php?page=home">Trang chủ</a></li>
-            <li><a href="index.php?page=category">Chủ đề</a></li>
+            <li><a href="index.php?page=home">TRANG CHỦ</a></li>
+            <li><a href="index.php?page=category">TẤT CẢ PHIM</a></li>
             <li class="mega-menu-trigger">
-                <a href="#">Thể loại <i class="ph ph-caret-down"></i></a>
+                <a href="#">THỂ LOẠI <i class="ph ph-caret-down"></i></a>
                 <div class="mega-menu glass">
                     <a href="index.php?page=category&genre=hanh-dong">Hành Động</a>
                     <a href="index.php?page=category&genre=tinh-cam">Tình Cảm</a>
@@ -43,7 +43,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <a href="index.php?page=category&genre=trinh-tham">Trinh Thám</a>
                 </div>
             </li>
-            <li><a href="#">Lịch chiếu</a></li>
+            <li><a href="#">LỊCH CHIẾU</a></li>
         </ul>
 
         <div class="nav-actions">
@@ -83,7 +83,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 </div>
             <?php else: ?>
                 <a href="index.php?page=login" class="btn-gold" id="loginBtn" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center;">
-                    Đăng nhập
+                    ĐĂNG NHẬP
                 </a>
             <?php endif; ?>
         </div>

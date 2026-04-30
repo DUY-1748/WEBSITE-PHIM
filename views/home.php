@@ -3,13 +3,12 @@
         <div class="hero-content">
             <div class="hero-meta">
                 <span class="quality-badge">SD-CAM</span>
-                <span>2024</span>
-                <span>Hành Động, Viễn Tưởng</span>
+                <span>2026</span>
+                <span>Hành Động, kịch tính</span>
             </div>
-            <h1 class="hero-title">ĐẾ CHẾ DUNE: PHẦN 2</h1>
-            <p class="hero-desc">Theo chân chuyến hành trình thần thoại của Paul Atreides khi anh liên kết cùng Chani và
-                người Fremen trong lúc thực hiện cuộc trả thù những kẻ âm mưu đã hủy hoại gia đình anh.</p>
-            <a href="index.php?page=chi-tiet" class="btn-play">
+            <h1 class="hero-title">CÁ MẬP SĂN NGƯỜI</h1>
+            <p class="hero-desc">Dòng nước lũ dữ dội nhuộm đỏ máu khi cư dân mắc kẹt ở thị trấn ven biển chiến đấu để sinh tồn trước cơn siêu bão tàn khốc và bầy cá mập đói khát theo bão kéo đến.</p>
+            <a href="index.php?page=watch&id=1290417" class="btn-play">
                 <i class="ph-fill ph-play-circle" style="font-size: 24px;"></i> Xem Phim
             </a>
         </div>

@@ -269,10 +269,12 @@ header {
     position: relative;
     height: 70vh;
     min-height: 500px;
-    background: url('https://image.tmdb.org/t/p/original/8Y43POKjjKDGI9MH89NW0NAzzp8.jpg') center/cover no-repeat;
+    background: url('https://image.tmdb.org/t/p/w500/adk8weka3O5648g3de4z3y4aE7G.jpg') no-repeat center 10% / cover;
     display: flex;
     align-items: flex-end;
     padding: 5% 5%;
+  
+
 }
 
 .hero-overlay {
