@@ -1,6 +1,7 @@
 <?php
 // Kết nối database thông qua PDO
 include_once __DIR__ . '/../core/config.php';
+require_once __DIR__ . '/../core/auth_admin.php';
 
 if (isset($_POST['add_new_movie'])) {
     $title = $_POST['title'];

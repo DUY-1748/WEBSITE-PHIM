@@ -1,7 +1,7 @@
 <?php 
 include_once __DIR__ . '/../core/config.php';
 include_once __DIR__ . '/../includes/sidebar.php';
-
+require_once __DIR__ . '/../core/auth_admin.php';
 if(isset($_GET['id'])) {
     $id = intval($_GET['id']);
     

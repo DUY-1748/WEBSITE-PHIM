@@ -1,11 +1,28 @@
 <?php 
 include_once __DIR__ . '/../core/config.php';
-include_once __DIR__ . '/../includes/sidebar.php'; 
+include_once __DIR__ . '/../includes/sidebar.php';
+require_once __DIR__ . '/../core/auth_admin.php';
+
+// Lấy từ khóa tìm kiếm từ URL (nếu có)
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
 ?>
+
 <div class="main-content">
     <div class="card">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px;">
             <h3><i class="fas fa-film"></i> Danh sách phim</h3>
+            
+            <form action="" method="GET" style="display: flex; gap: 5px;">
+                <input type="text" name="search" placeholder="Nhập tên phim cần tìm..." 
+                       value="<?= htmlspecialchars($search) ?>" 
+                       style="padding: 8px 15px; border-radius: 20px; border: 1px solid #444; background: #1a1a1a; color: white; width: 250px;">
+                <button type="submit" style="padding: 8px 15px; border-radius: 20px; border: none; background: var(--primary); color: black; cursor: pointer; font-weight: bold;">
+                    <i class="fas fa-search"></i> Tìm
+                </button>
+                <?php if (!empty($search)): ?>
+                    <a href="manage-movies.php" style="padding: 8px 15px; color: #aaa; text-decoration: none; font-size: 13px;">Xóa lọc</a>
+                <?php endif; ?>
+            </form>
         </div>
 
         <table>
@@ -22,10 +39,16 @@ include_once __DIR__ . '/../includes/sidebar.php';
 
             <tbody>
                 <?php
-                // Truy vấn danh sách phim
-                $result = $pdo->query("SELECT * FROM movies ORDER BY id DESC");
-                if ($result && $result->rowCount() > 0):
-                    while($row = $result->fetch(PDO::FETCH_ASSOC)): 
+                // Chuẩn bị câu lệnh SQL có lọc theo tên phim
+                if (!empty($search)) {
+                    $stmt = $pdo->prepare("SELECT * FROM movies WHERE title LIKE ? ORDER BY id DESC");
+                    $stmt->execute(["%$search%"]);
+                } else {
+                    $stmt = $pdo->query("SELECT * FROM movies ORDER BY id DESC");
+                }
+
+                if ($stmt && $stmt->rowCount() > 0):
+                    while($row = $stmt->fetch(PDO::FETCH_ASSOC)): 
                         // Logic xử lý đường dẫn Poster
                         $poster = trim($row['poster_path'] ?? '');
                         $final_url = "";
@@ -36,7 +59,6 @@ include_once __DIR__ . '/../includes/sidebar.php';
                             } elseif (str_starts_with($poster, '/')) {
                                 $final_url = "https://image.tmdb.org/t/p/w500" . $poster;
                             } else {
-                                // Kiểm tra nếu là ảnh upload local
                                 if (str_contains($poster, 'uploads/')) {
                                     $final_url = "../" . ltrim($poster, '/');
                                 } else {
@@ -66,7 +88,6 @@ include_once __DIR__ . '/../includes/sidebar.php';
                         <td>
                             <div style="display: flex; flex-wrap: wrap; gap: 5px;">
                                 <?php
-                                // Lấy danh sách các thể loại của phim này từ bảng trung gian movie_genre
                                 $stmt_genres = $pdo->prepare("
                                     SELECT g.name 
                                     FROM genres g 
@@ -105,7 +126,12 @@ include_once __DIR__ . '/../includes/sidebar.php';
                     </tr>
                 <?php endwhile; 
                 else: ?>
-                    <tr><td colspan="6" style="text-align:center;">Chưa có phim nào trong hệ thống</td></tr>
+                    <tr>
+                        <td colspan="6" style="text-align:center; padding: 50px; color: #888;">
+                            <i class="fas fa-search-minus" style="font-size: 30px; display: block; margin-bottom: 10px;"></i>
+                            Không tìm thấy phim nào khớp với từ khóa "<strong><?= htmlspecialchars($search) ?></strong>"
+                        </td>
+                    </tr>
                 <?php endif; ?>
             </tbody>
         </table>
