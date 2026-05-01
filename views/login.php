@@ -2,6 +2,22 @@
     <div class="auth-box glass">
         <div class="auth-header">
             <h1>Chào mừng trở lại!</h1>
+            
+            <?php 
+                // Kiểm tra các lỗi được gửi từ api/login_submit.php
+                if (isset($_GET['error'])) {
+                    if ($_GET['error'] == 'account_locked') {
+                        echo '<p style="color: #ff4d4d; background: rgba(255, 77, 77, 0.1); padding: 10px; border-radius: 8px; font-size: 14px; text-align: center; border: 1px solid #ff4d4d; margin-bottom: 15px;">
+                                <i class="ph ph-lock-laminated"></i> Tài khoản của bạn đã bị khóa bởi Admin. Vui lòng liên hệ hỗ trợ!
+                              </p>';
+                    } elseif ($_GET['error'] == 'invalid_credentials') {
+                        echo '<p style="color: #ff4d4d; background: rgba(255, 77, 77, 0.1); padding: 10px; border-radius: 8px; font-size: 14px; text-align: center; border: 1px solid #ff4d4d; margin-bottom: 15px;">
+                                <i class="ph ph-warning-circle"></i> Tên đăng nhập hoặc mật khẩu không chính xác.
+                              </p>';
+                    }
+                }
+            ?>
+
             <p>Đăng nhập để trải nghiệm không gian điện ảnh riêng của bạn.</p>
         </div>
 
