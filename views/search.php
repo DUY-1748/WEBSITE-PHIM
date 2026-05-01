@@ -1,16 +1,16 @@
 <?php
 include_once 'core/config.php';
 
-// 1. Lấy từ khóa tìm kiếm (đã sửa từ 'query' thành 'search' để khớp với header.php của bạn)
+// 1. Lấy từ khóa tìm kiếm 
 $search_query = isset($_GET['search']) ? trim($_GET['search']) : ''; 
 $results = [];
 
 if (!empty($search_query)) {
     /**
      * 2. SQL Tối ưu:
-     * - Tìm trong 'title' và 'overview' (đúng tên cột trong database của bạn).
+     * - Tìm trong 'title' và 'overview'.
      * - ORDER BY CASE: Đưa những phim có tên khớp chính xác hoặc khớp từ đầu lên trước để giảm kết quả loãng.
-     * - LIMIT 15: Giới hạn 15 kết quả (nằm trong khoảng 10-20 bạn yêu cầu).
+     * - LIMIT 15: Giới hạn 15 kết quả.
      */
     $sql = "SELECT * FROM movies 
             WHERE title LIKE ? OR overview LIKE ? 

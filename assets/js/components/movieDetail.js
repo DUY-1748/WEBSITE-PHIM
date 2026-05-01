@@ -1,7 +1,6 @@
 export const renderMovieDetail = (movie, relatedMovies = []) => {
     const container = document.createElement('div');
     
-    // Fix lỗi undefined cho dữ liệu
     const releaseDate = movie.release_date || movie.date || 'Đang cập nhật';
     const rating = movie.rating || '8.5';
     const overview = movie.overview || 'Mô tả phim đang được cập nhật...';
@@ -16,7 +15,6 @@ export const renderMovieDetail = (movie, relatedMovies = []) => {
         width: 100%;
     `;
 
-    // 1. Phần giao diện chính (Đã bỏ cột bình luận)
     container.innerHTML = `
         <div style="position: relative; height: 600px; width: 100%; overflow: hidden;">
             <div style="
@@ -64,21 +62,19 @@ export const renderMovieDetail = (movie, relatedMovies = []) => {
             </div>
         </div>
 
-      <div style="padding: 60px;">
+        <div style="padding: 60px;">
             <h2 style="font-size: 24px; font-weight: 900; margin-bottom: 30px; display: flex; align-items: center; gap: 15px;">
                 <span style="width: 4px; height: 24px; background: #ffc107; display: inline-block; border-radius: 2px;"></span>
                 ĐỀ XUẤT CHO BẠN
             </h2>
-            <div id="related-grid" style="
-                display: grid; 
-                /* Chỉnh lại thành 6 cột cố định, mỗi cột bằng nhau */
-                grid-template-columns: repeat(6, 1fr); 
-                gap: 20px;
-            ">
-                ${relatedMovies.length > 0 ? relatedMovies.slice(0, 6).map(m => `
-                    <a href="index.php?page=watch&id=${m.id}" style="text-decoration: none; color: white; transition: 0.3s; display: block;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div id="related-grid" style="display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; scrollbar-width: none; -webkit-overflow-scrolling: touch;">
+                ${relatedMovies.length > 0 ? relatedMovies.map(m => `
+                    <a href="index.php?page=watching&id=${m.id}" style="text-decoration: none; color: white; transition: 0.3s; flex: 0 0 180px; display: block;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
                         <div style="position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 2/3; box-shadow: 0 10px 20px rgba(0,0,0,0.3);">
                             <img src="${m.poster_path ? 'https://image.tmdb.org/t/p/w500' + m.poster_path : m.poster}" style="width: 100%; height: 100%; object-fit: cover;">
+                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: 0.3s;" onmouseover="this.querySelector('i').parentElement.style.opacity='1'" onmouseout="this.querySelector('i').parentElement.style.opacity='0'">
+                                <i class="fas fa-play-circle" style="font-size: 40px; color: #ffc107;"></i>
+                            </div>
                             <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); padding: 2px 8px; border-radius: 4px; font-size: 11px; color: #ffc107; font-weight: bold;">
                                 ⭐ ${m.rating || '8.0'}
                             </div>
@@ -93,12 +89,10 @@ export const renderMovieDetail = (movie, relatedMovies = []) => {
         </div>
     `;
 
-    // 3. XỬ LÝ NÚT BẤM
     const watchBtn = container.querySelector('#btn-watch-main');
     if (watchBtn) {
         watchBtn.onclick = () => {
-            const id = movie.id; 
-            window.location.href = `index.php?page=watching&id=${id}`;
+            window.location.href = `index.php?page=watching&id=${movie.id}`;
         };
     }
 

@@ -1,7 +1,6 @@
 # Website Xem Phim Trực Tuyến
 ## 🛠 Công nghệ sử dụng
-* **Frontend:** HTML5, CSS3, JavaScript (Vanilla).
-* **Framework CSS:** Bootstrap 5.
+* **Frontend:** PHP, MySQL, HTML5, CSS3, JavaScript (Vanilla).
 * **Icon:** FontAwesome.
 ## 👥 Danh sách thành viên
 Dự án được chia module và thực hiện bởi nhóm gồm 6 thành viên:

@@ -6,9 +6,9 @@
                 <span>2026</span>
                 <span>Hành Động, kịch tính</span>
             </div>
-            <h1 class="hero-title">CÁ MẬP SĂN NGƯỜI</h1>
-            <p class="hero-desc">Dòng nước lũ dữ dội nhuộm đỏ máu khi cư dân mắc kẹt ở thị trấn ven biển chiến đấu để sinh tồn trước cơn siêu bão tàn khốc và bầy cá mập đói khát theo bão kéo đến.</p>
-            <a href="index.php?page=watch&id=1290417" class="btn-play">
+            <h1 class="hero-title">CÔ DÂU!</h1>
+            <p class="hero-desc">Một cách tiếp cận táo bạo, phá vỡ mọi khuôn mẫu đối với một trong những câu chuyện hấp dẫn nhất thế giới. Bộ phim theo chân Frankenstein cô đơn (do Chrisitian Bale thủ vai) lên đường đến Chicago những năm 1930 để tìm đến nhà khoa học Dr. Euphronious (Annette Bening – 5 lần đề cử Oscar thủ vai), với hy vọng bà có thể tạo ra một người bạn đồng hành cho mình...</p>
+            <a href="index.php?page=watch&id=1159831" class="btn-play">
                 <i class="ph-fill ph-play-circle" style="font-size: 24px;"></i> Xem Phim
             </a>
         </div>

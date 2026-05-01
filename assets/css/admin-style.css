@@ -115,11 +115,11 @@ input:focus { border-color: var(--primary); outline: none; }
     background: #333;
     color: var(--primary);
 }
-/* Import font hiện đại */
+/* Responsive cho mobile */
 @import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;600;700&display=swap');
 
 :root {
-    --primary: #f1c40f; /* Vàng đặc trưng Làng Phim */
+    --primary: #f1c40f;
     --bg-dark: #121212;
     --card-bg: #1e1e1e;
     --text-main: #ffffff;

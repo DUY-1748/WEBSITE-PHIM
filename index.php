@@ -1,7 +1,4 @@
 <?php
-/**
- * FILE INDEX ĐÃ FIX LỖI ĐƯỜNG DẪN
- */
 
 // 1. Bắt đầu session ở đầu file để đồng bộ đăng nhập
 if (session_status() === PHP_SESSION_NONE) {
@@ -39,7 +36,7 @@ switch ($page) {
         include 'views/movie-detail.php';
         break;
     case 'watching':
-        include 'views/watch.php'; // Trang xem phim chứa phần bình luận
+        include 'views/watch.php'; 
         break; 
     case 'search':
         include 'views/search.php';

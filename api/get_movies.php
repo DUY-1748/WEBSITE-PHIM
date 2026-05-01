@@ -31,7 +31,6 @@ if (!empty($allTmdbMovies)) {
         $stmt->execute([$movie['id']]);
         
         if (!$stmt->fetch()) {
-            // 3. INSERT (ĐÃ SỬA: backdrop_path -> backdrop)
             $sql = "INSERT INTO movies (tmdb_id, title, overview, poster_path, backdrop_path, release_date, rating) 
                     VALUES (?, ?, ?, ?, ?, ?, ?)";
             $insertStmt = $pdo->prepare($sql);

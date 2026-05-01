@@ -31,9 +31,9 @@ if ($user && password_verify($password, $user['password'])) {
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['username'] = $user['username'];
     $_SESSION['role'] = $user['role'];
-    $_SESSION['full_name'] = $user['full_name']; // Lưu thêm full_name để hiện icon HI
+    $_SESSION['full_name'] = $user['full_name']; 
 
-    // 3. Chuyển hướng bằng PHP (Cách này ổn định nhất)
+    // 3. Chuyển hướng bằng PHP 
     if ($_SESSION['role'] == 1) {
         header("Location: ../admin/index.php");
     } else {

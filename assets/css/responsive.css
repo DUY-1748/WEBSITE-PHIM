@@ -1,112 +1,193 @@
-/* Tablet: <=1024px */
-@media (max-width: 1024px) {
-  .hero-title {
-    font-size: 2.2rem;
-  }
-  .movie-grid {
-    gap: 20px;
-  }
-}
-
-/* Tablet nhỏ: <=768px */
-@media (max-width: 768px) {
-  /* Header */
-  header {
-    flex-direction: column;
-    text-align: center;
-    padding: 10px;
-  }
-  .nav-menu {
-    display: none; /* có thể thay bằng hamburger */
-  }
-  .search-box {
+/* ================================================================
+   MẶC ĐỊNH (DESKTOP) 
+   ================================================================ */
+.menu-btn-open, .menu-btn-close, #menu-toggle {
     display: none;
-  }
+}
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+/* Tối ưu Header để không bị xô lệch trên Mobile */
+@media (max-width: 1024px) {
+    #mainHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; /* Đẩy Menu - Logo - Login ra 3 phía */
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-  /* Hero */
-  .hero {
-    height: 50vh;
-    min-height: 350px;
-    padding: 20px;
-  }
-  .hero-title {
-    font-size: 1.8rem;
-  }
+    .logo {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%); /* Luôn giữ Logo ở chính giữa */
+        font-size: 18px;
+    }
 
-  /* Movie grid */
-  .allmovie {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  }
+    /* Đảm bảo nút Đăng nhập không bị méo */
+    .btn-gold {
+        padding: 5px 10px !important;
+        font-size: 12px !important;
+        white-space: nowrap; /* Không cho chữ nhảy xuống dòng */
+    }
 
-  /* Comments */
-  .comments {
-    padding: 10px;
-  }
-
-  /* Admin sidebar */
-  .sidebar {
-    width: 200px;
-  }
-  .main-content {
-    margin-left: 200px;
-    width: calc(100% - 200px);
-  }
+    /* Quan trọng: Sidebar nằm trên cùng */
+    .nav-menu {
+        z-index: 99999;
+    }
 }
 
-/* Mobile: <=480px */
-@media (max-width: 480px) {
-  /* Header */
-  .site-title {
-    font-size: 20px;
-  }
+/* ================================================================
+   MOBILE VIEW (Dưới 768px)
+   ================================================================ */
+@media (max-width: 768px) {
+    /* 1. Hiện nút mở menu */
+    .menu-btn-open {
+        display: block;
+        cursor: pointer;
+        font-size: 26px;
+        color: white;
+        order: -1; /* Đẩy về bên trái logo */
+    }
 
-  /* Episodes buttons */
-  .episodes {
-    flex-direction: column;
-    gap: 8px;
-  }
-  .episodes button {
-    width: 100%;
-  }
+    /* 2. Biến Menu thành thanh trượt bên trái (Drawer) */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        left: -100%; /* Ẩn menu đi */
+        width: 280px;
+        height: 100vh;
+        background: #121217; /* Màu nền tối cho web phim */
+        flex-direction: column;
+        padding: 20px;
+        transition: 0.4s all ease-in-out;
+        z-index: 9999;
+        display: flex;
+        gap: 10px;
+        box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+    }
 
-  /* Video */
-  video {
-    width: 100%;
-    height: auto;
-  }
+    /* Khi bấm vào nút menu (Checkbox checked) */
+    #menu-toggle:checked ~ .nav-menu {
+        left: 0;
+    }
 
-  /* Movie grid */
-  .allmovie {
-    grid-template-columns: 1fr;
-  }
+    /* 3. Hiện nút đóng trong menu */
+    .menu-btn-close {
+        display: block;
+        text-align: right;
+        margin-bottom: 20px;
+        cursor: pointer;
+        font-size: 24px;
+        color: #facc15;
+    }
 
-  /* Comments form */
-  .comments form textarea {
-    width: 100%;
-    font-size: 14px;
-  }
-  .comments form button {
-    width: 100%;
-  }
+    /* 4. Chỉnh sửa link menu trên mobile */
+    .nav-menu li {
+        width: 100%;
+    }
 
-  /* Footer */
-  .footer-grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
+    .nav-menu li a {
+        display: block;
+        padding: 12px 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        font-size: 16px;
+    }
 
-  /* Admin sidebar */
-  .sidebar {
-    position: absolute;
-    left: -260px; /* ẩn ra ngoài */
-    transition: 0.3s;
-  }
-  .sidebar.active {
-    left: 0; /* hiện khi click nút menu */
-  }
-  .main-content {
-    margin-left: 0;
-    width: 100%;
-    padding: 15px;
-  }
+    /* 5. Xử lý Mega Menu (Thể loại) trên mobile */
+    .mega-menu {
+        position: static !important; 
+        display: none; /* Ẩn đi, chỉ hiện khi hover hoặc click */
+        width: 100% !important;
+        transform: none !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        grid-template-columns: 1fr 1fr !important; /* Chia 2 cột thể loại */
+        padding: 10px !important;
+        background: rgba(255,255,255,0.03) !important;
+        box-shadow: none !important;
+    }
+
+    .mega-menu-trigger:hover .mega-menu {
+        display: grid;
+    }
+
+    /* 6. Header điều chỉnh lại cho gọn */
+    #mainHeader {
+        padding: 10px 15px;
+        height: 60px;
+    }
+
+    .logo {
+        font-size: 20px;
+        flex: 1;
+        text-align: center;
+    }
+
+    /* Ẩn bớt các thành phần không cần thiết trên mobile để tránh tràn */
+    .username-text, .search-box {
+        display: none; 
+    }
+
+    /* Nếu muốn hiện icon tìm kiếm thay vì ô input */
+    .nav-actions {
+        gap: 15px;
+    }
+}
+
+/* ================================================================
+   LAPTOP VIEW (Trên 769px) 
+   ================================================================ */
+@media (min-width: 769px) {
+    .nav-menu {
+        display: flex !important;
+        position: static;
+        height: auto;
+        width: auto;
+        background: transparent;
+        flex-direction: row;
+        box-shadow: none;
+    }
+}
+@media (max-width: 768px) {
+    /* 1. Nhắm vào tất cả các container chứa danh sách phim */
+    .section-container > div, 
+    .section-container ul,
+    .list-film,
+    .movie-grid {
+        display: flex !important; /* Ép các thẻ phim nằm ngang */
+        flex-wrap: nowrap !important; /* Không cho phép nhảy xuống dòng */
+        overflow-x: auto !important; /* Cho phép cuộn ngang */
+        padding-bottom: 20px !important; /* Khoảng trống cho thanh cuộn hoặc bóng đổ */
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 15px;
+    }
+
+    /* Ẩn thanh cuộn để giao diện sạch sẽ */
+    .section-container > div::-webkit-scrollbar,
+    .section-container ul::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* 2. Định dạng lại từng thẻ phim con */
+    .movie-card, 
+    .movie-item, 
+    .section-container li,
+    .section-container > div > div { 
+        flex: 0 0 150px !important; /* Cố định độ rộng mỗi phim là 150px */
+        width: 150px !important;
+        scroll-snap-align: start;
+        list-style: none; /* Bỏ chấm tròn nếu là thẻ li */
+    }
+
+    /* Đảm bảo ảnh không bị méo */
+    .movie-card img, .movie-item img, .section-container li img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
 }

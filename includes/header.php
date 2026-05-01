@@ -19,16 +19,29 @@ if (session_status() === PHP_SESSION_NONE) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 
 <body>
 
     <header class="glass" id="mainHeader">
+        <input type="checkbox" id="menu-toggle" style="display: none;">
+
+        <label for="menu-toggle" class="menu-btn-open">
+            <img src="assets/uploads/menuicon.png" alt="Menu">
+        </label>
+
         <a href="index.php" class="logo">LÀNG PHIM</a>
 
         <ul class="nav-menu">
+            <label for="menu-toggle" class="menu-btn-close">
+                 <img src="assets/uploads/menudong.png" alt="Menu"> 
+            </label>
+
             <li><a href="index.php?page=home">TRANG CHỦ</a></li>
             <li><a href="index.php?page=category">TẤT CẢ PHIM</a></li>
+            
             <li class="mega-menu-trigger">
                 <a href="#">THỂ LOẠI <i class="ph ph-caret-down"></i></a>
                 <div class="mega-menu glass">
@@ -49,35 +62,35 @@ if (session_status() === PHP_SESSION_NONE) {
                     <a href="index.php?page=category&genre=trinh-tham">Trinh Thám</a>
                 </div>
             </li>
+            
             <li><a href="#">LỊCH CHIẾU</a></li>
         </ul>
 
         <div class="nav-actions">
-            <form action="index.php" method="GET">
+            <form action="index.php" method="GET" class="search-form-desktop">
                 <input type="hidden" name="page" value="search">
                 <div class="search-box">
                     <i class="ph ph-magnifying-glass" style="position: absolute; left: 10px; top: 10px; color: var(--text-secondary);"></i>
-                    <input type="text" id="search_input" name="search" placeholder="Tìm kiếm phim, diễn viên..."
+                    <input type="text" id="search_input" name="search" placeholder="Tìm kiếm phim..."
                         value="<?= isset($_GET['query']) ? htmlspecialchars($_GET['query']) : '' ?>" required>
                 </div>
                 <div id="search-suggestions" class="suggestions-dropdown"></div>
             </form>
 
-          <?php if (isset($_SESSION['user_id'])): ?>
-    <div class="user-menu" id="userMenu">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <span style="color: white; font-weight: 500; font-size: 14px;">
-                <?php echo $_SESSION['username']; ?>
-            </span>
-            
-            <div class="avatar-circle">
-                <?php 
-                    // Lấy chữ cái đầu tiên của tên (ví dụ: "Nguyen" lấy chữ "N")
-                    $firstLetter = strtoupper(substr($_SESSION['username'], 0, 1));
-                    echo $firstLetter;
-                ?>
-            </div>
-        </div>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <div class="user-menu" id="userMenu">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span class="username-text" style="color: white; font-weight: 500; font-size: 14px;">
+                            <?php echo $_SESSION['username']; ?>
+                        </span>
+                        
+                        <div class="avatar-circle">
+                            <?php 
+                                $firstLetter = strtoupper(substr($_SESSION['username'], 0, 1));
+                                echo $firstLetter;
+                            ?>
+                        </div>
+                    </div>
                     
                     <div class="user-dropdown">
                         <a href="index.php?page=profile"><i class="ph ph-user"></i> Trang cá nhân</a>
@@ -96,6 +109,7 @@ if (session_status() === PHP_SESSION_NONE) {
     </header>
 
     <script>
+        // Xử lý login status
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('login_status') === 'success' || urlParams.get('success') === 'login') {
             const userData = {

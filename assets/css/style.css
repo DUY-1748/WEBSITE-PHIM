@@ -287,12 +287,12 @@ header {
     position: relative;
     height: 70vh;
     min-height: 500px;
-    background: url('https://image.tmdb.org/t/p/w500/adk8weka3O5648g3de4z3y4aE7G.jpg') no-repeat center 10% / cover;
+    background: url('https://image.tmdb.org/t/p/w500/60PGmrPEUId7KJQb17AAMsItMMJ.jpg') no-repeat center 50% / cover;
     display: flex;
     align-items: flex-end;
     padding: 5% 5%;
-  
-
+   object-fit: cover;
+   width: auto;
 }
 
 .hero-overlay {
@@ -658,7 +658,6 @@ header {
     color: var(--primary);
     text-decoration: none;
 }
-/* Bạn có thể dán chung vào file CSS hiện tại */
 
 .auth-container {
     /* Đảm bảo trang đăng ký có đủ không gian vì nhiều ô input hơn */
@@ -827,3 +826,124 @@ input[type="checkbox"] {
         display: none;
     }
 }
+    /* CSS CƠ BẢN CHO FOOTER */
+    .site-footer {
+        background: #000;
+        color: #fff;
+        padding: 60px 20px 20px;
+        font-family: sans-serif;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .footer-col h3 {
+        color: #ffc107;
+        margin-bottom: 20px;
+        font-size: 18px;
+        text-transform: uppercase;
+    }
+
+    .footer-logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffc107;
+        margin-bottom: 15px;
+    }
+
+    .footer-links {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 10px;
+    }
+
+    .footer-links a {
+        color: #888;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .footer-links a:hover {
+        color: #ffc107;
+    }
+
+    .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 20px;
+    }
+
+    .social-icon {
+        color: #fff;
+        background: #1a1d23;
+        width: 35px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        text-decoration: none;
+    }
+
+    .subscribe-form {
+        display: flex;
+        background: #1a1d23;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .subscribe-form input {
+        background: transparent;
+        border: none;
+        padding: 12px;
+        color: #fff;
+        flex: 1;
+        outline: none;
+    }
+
+    .subscribe-form button {
+        background: #ffc107;
+        border: none;
+        padding: 0 15px;
+        cursor: pointer;
+    }
+
+    .footer-bottom {
+        text-align: center;
+        padding-top: 40px;
+        margin-top: 40px;
+        border-top: 1px solid #1a1d23;
+        color: #666;
+        font-size: 14px;
+    }
+
+    /* CSS FIX CĂN GIỮ TRÊN MOBILE */
+    @media (max-width: 768px) {
+        .footer-col {
+            text-align: center; /* Căn giữa văn bản */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Căn giữa các khối con */
+        }
+
+        .social-links {
+            justify-content: center; /* Căn giữa các icon mạng xã hội */
+        }
+
+        .subscribe-form {
+            width: 100%;
+            max-width: 300px; /* Giới hạn độ rộng form đăng ký trên mobile */
+        }
+        
+        .footer-grid {
+            gap: 50px; /* Tăng khoảng cách giữa các cột khi xếp chồng */
+        }
+    }
