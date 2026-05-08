@@ -1,35 +1,37 @@
-
 <?php
 include_once __DIR__ . '/../core/config.php';
 require_once __DIR__ . '/../core/auth_admin.php';
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+$status = "";
 
-    // Xử lý đổi Role (Thường/VIP/Admin)
-    if (isset($_GET['new_role'])) {
-        $new_role = $_GET['new_role'];
-        $stmt = $pdo->prepare("UPDATE users SET role = ? WHERE user_id = ?");
-        $stmt->execute([$new_role, $id]);
-    }
-
-    // Xử lý Khóa/Mở khóa
-    if (isset($_GET['toggle_status'])) {
-        $current_status = $_GET['toggle_status'];
-        $new_status = ($current_status == 1) ? 0 : 1;
-        $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE user_id = ?");
-        $stmt->execute([$new_status, $id]);
-    }
-
-    header("Location: manage-users.php");
-    exit();
+// 1. Xử lý đổi Role
+if (isset($_GET['id']) && isset($_GET['new_role'])) {
+    $stmt = $pdo->prepare("UPDATE users SET role = ? WHERE user_id = ?");
+    if($stmt->execute([$_GET['new_role'], $_GET['id']])) $status = "role_updated";
 }
-// Xử lý xóa user
+
+// 2. Xử lý Khóa/Mở khóa
+if (isset($_GET['id']) && isset($_GET['toggle_status'])) {
+    $new_status = ($_GET['toggle_status'] == 1) ? 0 : 1;
+    $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE user_id = ?");
+    if($stmt->execute([$new_status, $_GET['id']])) $status = "status_changed";
+}
+
+// 3. Xử lý Xóa người dùng
 if (isset($_GET['delete'])) {
-    $id = $_GET['delete'];
-    $stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
-    $stmt->execute([$id]);
-    header("Location: manage-users.php");
-    exit();
+    try {
+        $stmt = $pdo->prepare("DELETE FROM users WHERE user_id = ?");
+        if($stmt->execute([$_GET['delete']])) {
+            header("Location: manage-users.php?msg=deleted");
+            exit();
+        }
+    } catch (PDOException $e) {
+        header("Location: manage-users.php?msg=error");
+        exit();
+    }
 }
+
+// Quay về kèm theo thông báo cụ thể
+header("Location: manage-users.php?msg=" . $status);
+exit();
 ?>

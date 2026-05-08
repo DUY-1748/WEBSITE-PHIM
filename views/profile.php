@@ -20,27 +20,50 @@ $user = $stmt->fetch();
 
     .profile-main-container {
         max-width: 1000px; 
-        margin: 100px auto; /* Căn giữa và tạo khoảng cách trên dưới */
+        margin: 100px auto; 
         padding: 0 20px;
     }
 
     /* Xử lý cho điện thoại */
     @media (max-width: 768px) {
         .profile-wrapper {
-            flex-direction: column; /* Chuyển thành hàng dọc */
+            flex-direction: column; 
             align-items: center;
         }
         .profile-main-container {
-            margin: 20px auto; /* Giảm khoảng cách trên mobile */
+            margin: 20px auto; 
         }
         .profile-info-card, .profile-form-card {
-            width: 100% !important; /* Chiếm hết chiều ngang */
+            width: 100% !important; 
         }
     }
+
+    .alert {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-size: 14px;
+    }
+    .alert-success { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
+    .alert-error { background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid #dc3545; }
 </style>
 
 <div class="profile-container" style="background: #0b0c10; padding: 20px 0; min-height: 90vh; font-family: sans-serif;">
     <div class="profile-main-container">
+        
+        <?php if (isset($_GET['status'])): ?>
+            <?php if ($_GET['status'] == 'success'): ?>
+                <div class="alert alert-success">✅ Cập nhật thông tin thành công!</div>
+            <?php elseif ($_GET['status'] == 'old_password_wrong'): ?>
+                <div class="alert alert-error">❌ Mật khẩu hiện tại không chính xác!</div>
+            <?php elseif ($_GET['status'] == 'mismatch'): ?>
+                <div class="alert alert-error">❌ Xác nhận mật khẩu mới không khớp!</div>
+            <?php elseif ($_GET['status'] == 'error'): ?>
+                <div class="alert alert-error">❌ Có lỗi xảy ra, vui lòng thử lại sau.</div>
+            <?php endif; ?>
+        <?php endif; ?>
+
         <div class="profile-wrapper">
             
             <div class="profile-info-card" style="flex: 1; background: #1a1d23; border-radius: 15px; padding: 30px; text-align: center; border: 1px solid #333; box-sizing: border-box;">
@@ -77,15 +100,29 @@ $user = $stmt->fetch();
                                style="width: 100%; background: #0b0c10; border: 1px solid #222; padding: 12px; border-radius: 8px; color: #555; box-sizing: border-box;">
                     </div>
 
+                    <hr style="border: 0; border-top: 1px solid #333; margin: 25px 0;">
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="color: #ffc107; display: block; margin-bottom: 8px; font-size: 14px;">Mật khẩu hiện tại (Bắt buộc nếu muốn đổi mật khẩu)</label>
+                        <input type="password" name="old_password" placeholder="Nhập mật khẩu đang sử dụng" 
+                               style="width: 100%; background: #0b0c10; border: 1px solid #444; padding: 12px; border-radius: 8px; color: #fff; box-sizing: border-box;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="color: #888; display: block; margin-bottom: 8px; font-size: 14px;">Mật khẩu mới</label>
+                        <input type="password" name="new_password" placeholder="Bỏ trống nếu không muốn đổi" 
+                               style="width: 100%; background: #0b0c10; border: 1px solid #444; padding: 12px; border-radius: 8px; color: #fff; box-sizing: border-box;">
+                    </div>
+
                     <div style="margin-bottom: 30px;">
-                        <label style="color: #888; display: block; margin-bottom: 8px; font-size: 14px;">Đổi mật khẩu mới</label>
-                        <input type="password" name="new_password" placeholder="Nhập mật khẩu nếu muốn thay đổi" 
+                        <label style="color: #888; display: block; margin-bottom: 8px; font-size: 14px;">Xác nhận mật khẩu mới</label>
+                        <input type="password" name="confirm_password" placeholder="Nhập lại mật khẩu mới" 
                                style="width: 100%; background: #0b0c10; border: 1px solid #444; padding: 12px; border-radius: 8px; color: #fff; box-sizing: border-box;">
                     </div>
 
                     <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                        <button type="submit" style="background: #ffc107; color: #000; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; flex: 1; min-width: 140px;">
-                            Cập nhật ngay
+                        <button type="submit" name="update_profile" style="background: #ffc107; color: #000; border: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.3s; flex: 1; min-width: 140px;">
+                            Cập nhật & Đăng xuất
                         </button>
                         <a href="api/logout.php" style="background: #ff4d4d; color: #fff; text-decoration: none; padding: 12px 25px; border-radius: 8px; font-weight: bold; text-align: center; flex: 1; min-width: 140px;">
                             Đăng xuất
